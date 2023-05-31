@@ -10,8 +10,6 @@ namespace WpfUI.Views
         public GameWindowView()
         {
             InitializeComponent();
-
-            GameBoard = new GameBoardView();
         }
     }
 }
