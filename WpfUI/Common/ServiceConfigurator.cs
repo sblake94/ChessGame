@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -38,7 +40,7 @@ namespace WpfUI.Common
                 .Where(implementation => implementation.Name.EndsWith("Service"))
                 .Where(implementation => implementation.FullName!.Contains(s_servicesNameSpace))
                 .Where(implementation => !implementation.IsInterface)
-                .Where(implementation => implementation.BaseType!.IsGenericType && implementation.BaseType.GetGenericTypeDefinition() == typeof(ServiceBase<>));
+                .Where(implementation => implementation.BaseType == typeof(ServiceBase));
 
             foreach (var implementation in implementations)
             {
@@ -52,7 +54,16 @@ namespace WpfUI.Common
                     throw new ServiceInterfaceNotFoundException($"Interface not found for implementation: {implementation.FullName}", implementation);
                 }
 
-                serviceCollection.AddTransient(@interface, implementation);
+                if (IsTransientService(implementation)) 
+                { serviceCollection.AddTransient(@interface, implementation); }
+                else
+                if (IsSingletonService(implementation)) 
+                { serviceCollection.AddSingleton(@interface, implementation); }
+                else
+                {
+                    throw new InvalidServiceException($"{implementation.Name} lacks a valid ServiceAttribute", @interface, implementation);
+                }
+                
             }
         }
 
@@ -80,5 +91,13 @@ namespace WpfUI.Common
                 serviceCollection.AddSingleton(view);
             }
         }
+
+
+        private static bool IsTransientService(Type type) =>
+            type.GetCustomAttributes(typeof(TransientService), inherit: true).Any();
+
+        private static bool IsSingletonService(Type type) =>
+            type.GetCustomAttributes(typeof(SingletonService), inherit: true).Any();
+
     }
 }

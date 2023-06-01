@@ -8,14 +8,10 @@
 		Background="#202020"
 		Title="GameWindowView" Height="auto" Width="auto">
     <StackPanel Margin="20" Orientation="Horizontal">
-		<Rectangle  
-			x:Name="GameBoard"
-			Fill="#303030"
-			Margin="10" 
-			Width="800" 
-			Height="800"/>
 
-		<Rectangle 
+		<local:GameBoardView/>
+
+		<Rectangle
 			HorizontalAlignment="Left"
 			Fill="#303030"
 			Margin="10"

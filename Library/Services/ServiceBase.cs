@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Library.Services;
 
-namespace Library.Services
+public class ServiceBase
 {
-    public class ServiceBase<T>
+    public ServiceBase()
     {
-        public ServiceBase()
-        {
-        }
     }
 }

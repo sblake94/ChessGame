@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 using WpfUI.Common;
@@ -15,14 +16,14 @@ namespace WpfUI
 
         public App()
         {
-            services = ServiceConfigurator.Configure();
-            MainWindow = services.GetRequiredService<GameWindowView>();
-            MainWindow.Show();
+            
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            services = ServiceConfigurator.Configure();
 
             MainWindow = services.GetRequiredService<GameWindowView>();
             MainWindow.Show();
