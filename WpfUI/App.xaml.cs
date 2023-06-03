@@ -25,7 +25,7 @@ namespace WpfUI
 
             services = ServiceConfigurator.Configure();
 
-            MainWindow = services.GetRequiredService<GameWindowView>();
+            MainWindow = new GameWindowView();
             MainWindow.Show();
         }
     }

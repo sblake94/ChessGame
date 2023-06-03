@@ -15,10 +15,10 @@ namespace WpfUI.Views
 
         public GameBoardView()
         {
-            viewModel = Ioc.Default.GetRequiredService<GameBoardViewModel>();
-            DataContext = viewModel;
-
             InitializeComponent();
+
+            viewModel = new GameBoardViewModel();
+            DataContext = viewModel;
         }        
     }
 }

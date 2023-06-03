@@ -24,8 +24,8 @@ namespace WpfUI.Common
             Assembly libAssembly = Assembly.Load(nameof(Library));
             Assembly wpfAssembly = Assembly.Load(nameof(WpfUI));
 
-            AddViews(serviceCollection, wpfAssembly);
-            AddViewModels(serviceCollection, wpfAssembly);
+            // AddViews(serviceCollection, wpfAssembly);
+            // AddViewModels(serviceCollection, wpfAssembly);
             AddServices(serviceCollection, libAssembly);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
