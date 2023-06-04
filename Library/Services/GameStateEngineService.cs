@@ -1,4 +1,4 @@
-﻿using Library.Attributes.ServiceAttributes;
+using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Models;
 using System.Numerics;
@@ -41,47 +41,23 @@ public class GameStateEngineService
             .Where(tile => tile.yPos == yPos)
             .FirstOrDefault();
 
+        var move = new MoveModel(CurrentBoard, SelectedTile, clickedTile);
+
         if (clickedTile is null) { throw new TileNotFoundException(new TileModel(xPos, yPos)); }
 
-        if (SelectedTile is null) 
+        if (SelectedTile is null || SelectedTile.IsEmpty) 
         { 
             SelectedTile = clickedTile; 
             return; 
         }
 
-        if(SelectedTile.IsEmpty)
+        if(move.IsValid)
         {
-            SelectedTile = clickedTile;
+            move.ExecuteMove();
+        }
         }
 
-        if (clickedTile.IsEmpty) 
-        { 
-            CurrentBoard.TransferPieceToEmptyTile(SelectedTile, clickedTile); 
-            return; 
-        }
-
-        if (clickedTile.IsNotEmpty) 
-        {
-            // Check Interactions
-            throw new NotImplementedException("No logic for landing on occupied spaces");
-            return;
-        }
-    }
-
-    public void SelectTile(TileModel tileModel)
-    {
-        TileModel matchingTile = CurrentBoard
-            .Where(tile => tile.xPos == tileModel.xPos)
-            .Where(tile => tile.yPos == tileModel.yPos)
-            .First();
-
-        if (matchingTile is null) { throw new TileNotFoundException(tileModel); }
-        if (matchingTile == SelectedTile)
-        {
-            SelectedTile = null;
-            return;
-        }
-
-        SelectedTile = matchingTile;
+        SelectedTile = null;
+        return;
     }
 }

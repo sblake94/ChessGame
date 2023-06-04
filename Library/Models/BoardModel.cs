@@ -2,6 +2,7 @@
 using Library.Exceptions;
 using System.Collections;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Security;
 
 namespace Library.Models
@@ -9,26 +10,20 @@ namespace Library.Models
     public class BoardModel : IEnumerable<TileModel>
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        private readonly IList<TileModel> _tiles;
+        private readonly TileModel[,] _tiles;
 
         public BoardModel()
         {
-            _tiles = new List<TileModel>();
+            _tiles = new TileModel[8,8];
 
             for(int x =  0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
                     TileModel tile = new TileModel(x, y, PieceModel.None);
-                    _tiles.Add(tile);
+                    _tiles[x,y] = tile;
                 }
             }
-        }
-
-        public BoardModel(IEnumerable<TileModel> pieces)
-        {
-            if (pieces is null) { throw new Exception(nameof(pieces)); }
-            this._tiles = pieces.ToList();
         }
 
         public BoardModel TransferPieceToEmptyTile(TileModel startingTile, TileModel destinationTile)
@@ -39,7 +34,10 @@ namespace Library.Models
             startingTile.OccupyingPiece = PieceModel.None;
             destinationTile.OccupyingPiece = piece;
 
-            return new BoardModel(_tiles);
+            this._tiles[startingTile.xPos, startingTile.yPos] = startingTile;
+            this._tiles[destinationTile.xPos, destinationTile.yPos] = destinationTile;
+
+            return this;
         }
 
         public IEnumerator<TileModel> GetEnumerator()
@@ -55,41 +53,23 @@ namespace Library.Models
             return GetEnumerator();
         }
 
-        public TileModel this[int idx]
-        {
-            get
-            {
-                Validation.NotNull(idx, nameof(idx));
-                Validation.InRange(idx, 0, 63, nameof(idx));
-
-                return _tiles[idx];
-            }
-            set
-            {
-                Validation.NotNull(idx, nameof(idx));
-                Validation.InRange(idx, 0, 63, nameof(idx));
-
-                _tiles[idx] = value;
-            }
-        }
-
         public TileModel this[int x, int y]
         {
             get
             {
                 Validation.NotNull(x, nameof(x));
                 Validation.NotNull(y, nameof(y));
-                Validation.InRange(x, 0, 8, nameof(x));
-                Validation.InRange(y, 0, 8, nameof(y));
+                Validation.InRange(x, 0, 7, nameof(x));
+                Validation.InRange(y, 0, 7, nameof(y));
 
-                return _tiles[x + y * 8];
+                return _tiles[x, y];
             }
             set
             {
-                Validation.InRange(x, 0, 8, nameof(x));
-                Validation.InRange(y, 0, 8, nameof(y));
+                Validation.InRange(x, 0, 7, nameof(x));
+                Validation.InRange(y, 0, 7, nameof(y));
 
-                _tiles[x + y * 8] = value;
+                _tiles[x, y] = value;
             }
         }
 
@@ -103,12 +83,14 @@ namespace Library.Models
                 Validation.IsInRange(reference[1], '1', '8', nameof(reference));
 
                 int x = reference[0] - 'A';
-                int y = reference[1] - '1';
+                int y = (int)char.GetNumericValue(reference[1]) - 1;
 
                 Validation.InRange(x, 0, 7, nameof(x));
                 Validation.InRange(y, 0, 7, nameof(y));
 
-                return _tiles[x + y * 8];
+                Debug.WriteLine($"Fetched Tile {_tiles[x, y].ClassicCoords} with reference {reference}");
+
+                return _tiles[x, y];
             }
             set
             {
@@ -118,12 +100,12 @@ namespace Library.Models
                 Validation.IsInRange(reference[1], '1', '8', nameof(reference));
 
                 int x = reference[0] - 'A';
-                int y = reference[1] - '1';
+                int y = (int)char.GetNumericValue(reference[1]);
 
                 Validation.InRange(x, 0, 7, nameof(x));
                 Validation.InRange(y, 0, 7, nameof(y));
 
-                _tiles[x + y * 8] = value;
+                _tiles[x, y] = value;
             }
         }
 

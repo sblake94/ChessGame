@@ -1,4 +1,4 @@
-﻿using Library.Attributes.ServiceAttributes;
+using Library.Attributes.ServiceAttributes;
 using Library.Models;
 
 namespace Library.Services;
@@ -13,5 +13,4 @@ public interface IGameStateEngineService
     public void SetBoardToStartingPositions();
 
     public void ClickOnTile(int xPos, int yPos);
-    public void SelectTile(TileModel tileModel);
 }

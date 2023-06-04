@@ -11,7 +11,7 @@ namespace Library.Models
         public string ClassicCoords { 
             get 
             {
-                string result = $"{(char)(xPos + 'A')}{(char)(yPos + '0')}";
+                string result = $"{(char)(xPos + 'A')}{(char)(yPos + '1')}";
                 return result;
             }
         }
