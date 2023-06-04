@@ -2,7 +2,7 @@
 {
     public static class Validation
     {
-        public static void NotNull(object obj, string paramName)
+        public static void NotNull(object? obj, string paramName)
         {
             if(obj == null)
             {
