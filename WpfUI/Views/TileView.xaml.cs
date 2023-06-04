@@ -30,12 +30,12 @@ namespace WpfUI.Views
 
         public static readonly DependencyProperty BoardRefProperty = DependencyProperty.Register(
         "BoardRef", typeof(string), typeof(TileView));
+
         public string BoardRef
         {
             get { return (string)GetValue(BoardRefProperty); }
             set { SetValue(BoardRefProperty, value); }
         }
-
 
         public TileView()
         {

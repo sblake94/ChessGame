@@ -23,14 +23,13 @@ public partial class GameBoardViewModel
         get { return BuildTileViewModels(); }
     }
 
-
-
     public GameBoardViewModel()
     {
         OnTileClicked = new RelayCommand<string>(Handle_OnTileClicked);
 
         // TODO: This should be done via constructor injection, but it works for now
         _gameStateEngineService = Ioc.Default.GetRequiredService<IGameStateEngineService>();
+
     }
 
     [RelayCommand]

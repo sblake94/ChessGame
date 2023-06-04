@@ -15,8 +15,8 @@ namespace Library.Models
                 return result;
             }
         }
-        public bool IsEmpty { get { return OccupyingPiece == PieceModel.EmptySpace; } }
-        public bool IsNotEmpty { get { return OccupyingPiece != PieceModel.EmptySpace; } }
+        public bool IsEmpty { get { return OccupyingPiece == PieceModel.None; } }
+        public bool IsNotEmpty { get { return OccupyingPiece != PieceModel.None; } }
         public bool IsLightTile { get { return (xPos + yPos) % 2 == 0; } }
 
         public PieceModel OccupyingPiece { get; set; }
@@ -32,7 +32,7 @@ namespace Library.Models
             this.xPos = xPos;
             this.yPos = yPos;
 
-            if (occupyingPiece is null) { occupyingPiece = PieceModel.EmptySpace; }
+            if (occupyingPiece is null) { occupyingPiece = PieceModel.None; }
             this.OccupyingPiece = occupyingPiece;
         }
 

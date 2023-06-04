@@ -9,8 +9,8 @@ public interface IGameStateEngineService
     public BoardModel CurrentBoard { get; }
     public TileModel SelectedTile { get; }
 
-    public BoardModel ClearBoard();
-    public BoardModel SetBoardToStartingPositions();
+    public void ClearBoard();
+    public void SetBoardToStartingPositions();
 
     public void ClickOnTile(int xPos, int yPos);
     public void SelectTile(TileModel tileModel);

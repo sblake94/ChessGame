@@ -19,7 +19,7 @@ namespace Library.Models
             {
                 for (int y = 0; y < 8; y++)
                 {
-                    TileModel tile = new TileModel(x, y, PieceModel.EmptySpace);
+                    TileModel tile = new TileModel(x, y, PieceModel.None);
                     _tiles.Add(tile);
                 }
             }
@@ -36,7 +36,7 @@ namespace Library.Models
             if(destinationTile.IsNotEmpty) { throw new InvalidMoveException(startingTile, destinationTile); }
 
             PieceModel piece = startingTile.OccupyingPiece;
-            startingTile.OccupyingPiece = PieceModel.EmptySpace;
+            startingTile.OccupyingPiece = PieceModel.None;
             destinationTile.OccupyingPiece = piece;
 
             return new BoardModel(_tiles);

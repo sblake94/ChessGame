@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-using System.Windows.Controls;
-
-using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using System.Windows.Controls;
 using WpfUI.ViewModels;
 
 namespace WpfUI.Views;

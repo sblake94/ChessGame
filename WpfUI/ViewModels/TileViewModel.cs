@@ -15,7 +15,23 @@ public class TileViewModel
     , INotifyPropertyChanged
 {
     private static SolidColorBrush LIGHT_TILE_COLOR = new SolidColorBrush(Color.FromRgb(198, 166, 118));
-    private static SolidColorBrush DARK_TILE_COLOR = new SolidColorBrush(Color.FromRgb(100, 46, 27)); 
+    private static SolidColorBrush DARK_TILE_COLOR = new SolidColorBrush(Color.FromRgb(100, 46, 27));
+
+    private static string EMPTY_UNIT_PATH = "";
+
+    private static string BLACK_PAWN_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackPawn.png";
+    private static string BLACK_ROOK_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackRook.png";
+    private static string BLACK_KNIG_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackKnight.png";
+    private static string BLACK_BISH_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackBishop.png";
+    private static string BLACK_QUEE_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackQueen.png";
+    private static string BLACK_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackKing.png";
+
+    private static string WHITE_PAWN_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhitePawn.png";
+    private static string WHITE_ROOK_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteRook.png";
+    private static string WHITE_KNIG_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKnight.png";
+    private static string WHITE_BISH_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteBishop.png";
+    private static string WHITE_QUEE_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteQueen.png";
+    private static string WHITE_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKing.png";
 
     private readonly IGameStateEngineService _gameStateEngineService;
     private TileModel? _tileModel;
@@ -34,23 +50,39 @@ public class TileViewModel
      (_tileModel.IsLightTile ? LIGHT_TILE_COLOR : DARK_TILE_COLOR) :
      Brushes.Magenta;
 
-    private string _imageSource;
     public string ImageSource 
     {
-        get 
+        get
         {
-            ImageSource = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\BlackPawn.png";
-
-            return _imageSource;
-        } 
-        set
-        {
-            if(_imageSource != value)
+            if (TileModel is null
+                || TileModel.OccupyingPiece is null
+                || TileModel.OccupyingPiece.CurrentPiece is null)
             {
-                _imageSource = value;
-                NotifyPropertyChanged(nameof(ImageSource));
+                return EMPTY_UNIT_PATH;
             }
-        }
+
+            switch (TileModel.OccupyingPiece.CurrentPiece)
+            {
+                // TODO: This needs to not use raw ints
+                case 0:     return EMPTY_UNIT_PATH;
+
+                case 1:     return WHITE_PAWN_PATH;
+                case 2:     return WHITE_ROOK_PATH;
+                case 3:     return WHITE_KNIG_PATH;
+                case 4:     return WHITE_BISH_PATH;
+                case 5:     return WHITE_QUEE_PATH;
+                case 6:     return WHITE_KING_PATH;
+
+                case 9:     return BLACK_PAWN_PATH;
+                case 10:    return BLACK_ROOK_PATH;
+                case 11:    return BLACK_KNIG_PATH;
+                case 12:    return BLACK_BISH_PATH;
+                case 13:    return BLACK_QUEE_PATH;
+                case 14:    return BLACK_KING_PATH;
+
+                default:    return EMPTY_UNIT_PATH;
+            }
+        } 
     }
 
     private bool _mouseIsOver;

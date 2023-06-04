@@ -10,7 +10,7 @@
 		<vm:GameBoardViewModel/>
 	</UserControl.DataContext>
 
-	<UniformGrid Columns="8" Rows="8">
+	<UniformGrid Columns="8" Rows="8" Height="600">
 		<local:TileView BoardRef="A1"/>
 		<local:TileView BoardRef="A2"/>
 		<local:TileView BoardRef="A3"/>

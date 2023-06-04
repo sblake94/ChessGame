@@ -10,36 +10,28 @@ public class GameStateEngineService
     : ServiceBase<GameStateEngineService>
     , IGameStateEngineService
 {
+    private readonly INotationService _notationService;
+
     public BoardModel CurrentBoard { get; set; }
     public TileModel? SelectedTile { get; set; }
 
 
-    public GameStateEngineService()
+    public GameStateEngineService(INotationService notationService)
     {
+        _notationService = notationService;
+
         ClearBoard();
-        // SetBoardToStartingPositions();
+        SetBoardToStartingPositions();
     }
 
-    public BoardModel ClearBoard()
+    public void ClearBoard()
     {
         CurrentBoard = new BoardModel();
-        CurrentBoard = DEBUG_POPULATEBOARDWITHPAWNS();
-        return CurrentBoard;
     }
 
-    public BoardModel SetBoardToStartingPositions()
+    public void SetBoardToStartingPositions()
     {
-        throw new NotImplementedException(nameof(SetBoardToStartingPositions));
-    }
-
-    public BoardModel DEBUG_POPULATEBOARDWITHPAWNS()
-    {
-        foreach(var tile in CurrentBoard)
-        {
-            tile.OccupyingPiece = new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Pawn);
-        }
-
-        return CurrentBoard;
+        CurrentBoard = _notationService.GetStartingBoard();
     }
 
     public void ClickOnTile(int xPos, int yPos)
