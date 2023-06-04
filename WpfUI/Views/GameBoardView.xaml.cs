@@ -11,14 +11,18 @@ namespace WpfUI.Views
     /// </summary>
     public partial class GameBoardView : UserControl
     {
-        public GameBoardViewModel viewModel;
+        GameBoardViewModel ViewModel { get; set; }
 
         public GameBoardView()
         {
             InitializeComponent();
 
-            viewModel = new GameBoardViewModel();
-            DataContext = viewModel;
-        }        
+            DataContext = ViewModel = new GameBoardViewModel();
+        }
+
+        private void TileView_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+
+        }
     }
 }

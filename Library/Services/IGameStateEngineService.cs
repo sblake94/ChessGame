@@ -7,6 +7,7 @@ namespace Library.Services;
 public interface IGameStateEngineService
 {
     public BoardModel CurrentBoard { get; }
+    public TileModel SelectedTile { get; }
 
     public BoardModel ClearBoard();
     public BoardModel SetBoardToStartingPositions();

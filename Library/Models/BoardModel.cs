@@ -54,5 +54,78 @@ namespace Library.Models
         {
             return GetEnumerator();
         }
+
+        public TileModel this[int idx]
+        {
+            get
+            {
+                Validation.NotNull(idx, nameof(idx));
+                Validation.InRange(idx, 0, 63, nameof(idx));
+
+                return _tiles[idx];
+            }
+            set
+            {
+                Validation.NotNull(idx, nameof(idx));
+                Validation.InRange(idx, 0, 63, nameof(idx));
+
+                _tiles[idx] = value;
+            }
+        }
+
+        public TileModel this[int x, int y]
+        {
+            get
+            {
+                Validation.NotNull(x, nameof(x));
+                Validation.NotNull(y, nameof(y));
+                Validation.InRange(x, 0, 8, nameof(x));
+                Validation.InRange(y, 0, 8, nameof(y));
+
+                return _tiles[x + y * 8];
+            }
+            set
+            {
+                Validation.InRange(x, 0, 8, nameof(x));
+                Validation.InRange(y, 0, 8, nameof(y));
+
+                _tiles[x + y * 8] = value;
+            }
+        }
+
+        public TileModel this[string reference]
+        {
+            get
+            {
+                Validation.NotNull(reference, nameof(reference));
+                Validation.Equals(reference.Length, 2);
+                Validation.IsInRange(reference[0], 'A', 'H', nameof(reference));
+                Validation.IsInRange(reference[1], '1', '8', nameof(reference));
+
+                int x = reference[0] - 'A';
+                int y = reference[1] - '1';
+
+                Validation.InRange(x, 0, 7, nameof(x));
+                Validation.InRange(y, 0, 7, nameof(y));
+
+                return _tiles[x + y * 8];
+            }
+            set
+            {
+                Validation.NotNull(reference, nameof(reference));
+                Validation.Equals(reference.Length, 2);
+                Validation.IsInRange(reference[0], 'A', 'H', nameof(reference));
+                Validation.IsInRange(reference[1], '1', '8', nameof(reference));
+
+                int x = reference[0] - 'A';
+                int y = reference[1] - '1';
+
+                Validation.InRange(x, 0, 7, nameof(x));
+                Validation.InRange(y, 0, 7, nameof(y));
+
+                _tiles[x + y * 8] = value;
+            }
+        }
+
     }
 }

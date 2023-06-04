@@ -8,7 +8,6 @@ namespace Library.Models
         public readonly int xPos;
         public readonly int yPos;
 
-
         public string ClassicCoords { 
             get 
             {
@@ -18,6 +17,7 @@ namespace Library.Models
         }
         public bool IsEmpty { get { return OccupyingPiece == PieceModel.EmptySpace; } }
         public bool IsNotEmpty { get { return OccupyingPiece != PieceModel.EmptySpace; } }
+        public bool IsLightTile { get { return (xPos + yPos) % 2 == 0; } }
 
         public PieceModel OccupyingPiece { get; set; }
 

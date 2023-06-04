@@ -6,105 +6,89 @@
 			 xmlns:vm="clr-namespace:WpfUI.ViewModels"
              xmlns:local="clr-namespace:WpfUI.Views"
              mc:Ignorable="d">
-	
 	<UserControl.DataContext>
 		<vm:GameBoardViewModel/>
 	</UserControl.DataContext>
-	
-	<UserControl.Resources>
-		<Style TargetType="{x:Type Button}" x:Key="TileBase">
-			<Setter Property="Width" Value="100"/>
-			<Setter Property="Height" Value="100"/>
-			<Setter Property="BorderThickness" Value="0"/>
-			
-			<!-- Correct this command field so that an id code is provided as a parameter to distinguish which tile was clicked -->
-			<Setter Property="Command" 
-					Value="{Binding DataContext.OnTileClicked, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-			
-		</Style>
-		<Style TargetType="{x:Type Button}"
-			   BasedOn="{StaticResource TileBase}"
-			   x:Key="DarkTile">
-			<Setter Property="Background" Value="SaddleBrown"/>
-		</Style>
-		<Style TargetType="{x:Type Button}"
-			   BasedOn="{StaticResource TileBase}"
-			   x:Key="LightTile">
-			<Setter Property="Background" Value="SandyBrown"/>
-		</Style>
-	</UserControl.Resources>
 
-	<UniformGrid x:Name="UGRID_Board" Rows="8" Columns="8" Height="800" Width="800">
-		<Button x:Name="TILE_A0" CommandParameter="A0" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_A1" CommandParameter="A1" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_A2" CommandParameter="A2" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_A3" CommandParameter="A3" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_A4" CommandParameter="A4" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_A5" CommandParameter="A5" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_A6" CommandParameter="A6" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_A7" CommandParameter="A7" Style="{StaticResource DarkTile}"/>
-		
-		<Button x:Name="TILE_B0" CommandParameter="B0" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_B1" CommandParameter="B1" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_B2" CommandParameter="B2" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_B3" CommandParameter="B3" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_B4" CommandParameter="B4" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_B5" CommandParameter="B5" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_B6" CommandParameter="B6" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_B7" CommandParameter="B7" Style="{StaticResource LightTile}"/>
+	<UniformGrid Columns="8" Rows="8">
+		<local:TileView BoardRef="A1"/>
+		<local:TileView BoardRef="A2"/>
+		<local:TileView BoardRef="A3"/>
+		<local:TileView BoardRef="A4"/>
+		<local:TileView BoardRef="A5"/>
+		<local:TileView BoardRef="A6"/>
+		<local:TileView BoardRef="A7"/>
+		<local:TileView BoardRef="A8"/>
 
-		<Button x:Name="TILE_C0" CommandParameter="C0" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_C1" CommandParameter="C1" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_C2" CommandParameter="C2" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_C3" CommandParameter="C3" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_C4" CommandParameter="C4" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_C5" CommandParameter="C5" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_C6" CommandParameter="C6" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_C7" CommandParameter="C7" Style="{StaticResource DarkTile}"/>
+		<local:TileView BoardRef="B1"/>
+		<local:TileView BoardRef="B2"/>
+		<local:TileView BoardRef="B3"/>
+		<local:TileView BoardRef="B4"/>
+		<local:TileView BoardRef="B5"/>
+		<local:TileView BoardRef="B6"/>
+		<local:TileView BoardRef="B7"/>
+		<local:TileView BoardRef="B8"/>
 
-		<Button x:Name="TILE_D0" CommandParameter="D0" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_D1" CommandParameter="D1" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_D2" CommandParameter="D2" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_D3" CommandParameter="D3" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_D4" CommandParameter="D4" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_D5" CommandParameter="D5" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_D6" CommandParameter="D6" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_D7" CommandParameter="D7" Style="{StaticResource LightTile}"/>
+		<local:TileView BoardRef="C1"/>
+		<local:TileView BoardRef="C2"/>
+		<local:TileView BoardRef="C3"/>
+		<local:TileView BoardRef="C4"/>
+		<local:TileView BoardRef="C5"/>
+		<local:TileView BoardRef="C6"/>
+		<local:TileView BoardRef="C7"/>
+		<local:TileView BoardRef="C8"/>
 
-		<Button x:Name="TILE_E0" CommandParameter="E0" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_E1" CommandParameter="E1" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_E2" CommandParameter="E2" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_E3" CommandParameter="E3" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_E4" CommandParameter="E4" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_E5" CommandParameter="E5" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_E6" CommandParameter="E6" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_E7" CommandParameter="E7" Style="{StaticResource DarkTile}"/>
+		<local:TileView BoardRef="D1"/>
+		<local:TileView BoardRef="D2"/>
+		<local:TileView BoardRef="D3"/>
+		<local:TileView BoardRef="D4"/>
+		<local:TileView BoardRef="D5"/>
+		<local:TileView BoardRef="D6"/>
+		<local:TileView BoardRef="D7"/>
+		<local:TileView BoardRef="D8"/>
 
-		<Button x:Name="TILE_F0" CommandParameter="F0" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_F1" CommandParameter="F1" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_F2" CommandParameter="F2" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_F3" CommandParameter="F3" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_F4" CommandParameter="F4" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_F5" CommandParameter="F5" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_F6" CommandParameter="F6" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_F7" CommandParameter="F7" Style="{StaticResource LightTile}"/>
+		<local:TileView BoardRef="E1"/>
+		<local:TileView BoardRef="E2"/>
+		<local:TileView BoardRef="E3"/>
+		<local:TileView BoardRef="E4"/>
+		<local:TileView BoardRef="E5"/>
+		<local:TileView BoardRef="E6"/>
+		<local:TileView BoardRef="E7"/>
+		<local:TileView BoardRef="E8"/>
 
-		<Button x:Name="TILE_G0" CommandParameter="G0" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_G1" CommandParameter="G1" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_G2" CommandParameter="G2" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_G3" CommandParameter="G3" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_G4" CommandParameter="G4" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_G5" CommandParameter="G5" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_G6" CommandParameter="G6" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_G7" CommandParameter="G7" Style="{StaticResource DarkTile}"/>
+		<local:TileView BoardRef="F1"/>
+		<local:TileView BoardRef="F2"/>
+		<local:TileView BoardRef="F3"/>
+		<local:TileView BoardRef="F4"/>
+		<local:TileView BoardRef="F5"/>
+		<local:TileView BoardRef="F6"/>
+		<local:TileView BoardRef="F7"/>
+		<local:TileView BoardRef="F8"/>
 
-		<Button x:Name="TILE_H0" CommandParameter="H0" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_H1" CommandParameter="H1" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_H2" CommandParameter="H2" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_H3" CommandParameter="H3" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_H4" CommandParameter="H4" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_H5" CommandParameter="H5" Style="{StaticResource LightTile}"/>
-		<Button x:Name="TILE_H6" CommandParameter="H6" Style="{StaticResource DarkTile}"/>
-		<Button x:Name="TILE_H7" CommandParameter="H7" Style="{StaticResource LightTile}"/>
+		<local:TileView BoardRef="G1"/>
+		<local:TileView BoardRef="G2"/>
+		<local:TileView BoardRef="G3"/>
+		<local:TileView BoardRef="G4"/>
+		<local:TileView BoardRef="G5"/>
+		<local:TileView BoardRef="G6"/>
+		<local:TileView BoardRef="G7"/>
+		<local:TileView BoardRef="G8"/>
+
+		<local:TileView BoardRef="H1"/>
+		<local:TileView BoardRef="H2"/>
+		<local:TileView BoardRef="H3"/>
+		<local:TileView BoardRef="H4"/>
+		<local:TileView BoardRef="H5"/>
+		<local:TileView BoardRef="H6"/>
+		<local:TileView BoardRef="H7"/>
+		<local:TileView BoardRef="H8"/>
+
+		<!--
+		<local:TileView BoardRef="A5" DataContext="{Binding Tiles[4]}"/>
+		<local:TileView BoardRef="A6" DataContext="{Binding Tiles[5]}"/>
+		<local:TileView BoardRef="A7" DataContext="{Binding Tiles[6]}"/>
+		<local:TileView BoardRef="A8" DataContext="{Binding Tiles[7]}"/>
+		-->
+
 	</UniformGrid>
 </UserControl>

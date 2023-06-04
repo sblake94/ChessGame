@@ -1,6 +1,7 @@
 ﻿namespace Library.Services;
 
-public class ServiceBase
+public class ServiceBase<T>
+    where T : ServiceBase<T>
 {
     public ServiceBase()
     {

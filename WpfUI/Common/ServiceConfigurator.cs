@@ -39,8 +39,7 @@ namespace WpfUI.Common
             var implementations = libAssembly.GetTypes()
                 .Where(implementation => implementation.Name.EndsWith("Service"))
                 .Where(implementation => implementation.FullName!.Contains(s_servicesNameSpace))
-                .Where(implementation => !implementation.IsInterface)
-                .Where(implementation => implementation.BaseType == typeof(ServiceBase));
+                .Where(implementation => !implementation.IsInterface);
 
             foreach (var implementation in implementations)
             {
@@ -55,15 +54,18 @@ namespace WpfUI.Common
                 }
 
                 if (IsTransientService(implementation)) 
-                { serviceCollection.AddTransient(@interface, implementation); }
-                else
-                if (IsSingletonService(implementation)) 
-                { serviceCollection.AddSingleton(@interface, implementation); }
-                else
                 {
-                    throw new InvalidServiceException($"{implementation.Name} lacks a valid ServiceAttribute", @interface, implementation);
+                    serviceCollection.AddTransient(@interface, implementation);
+                    continue;
                 }
-                
+
+                if (IsSingletonService(implementation)) 
+                { 
+                    serviceCollection.AddSingleton(@interface, implementation);
+                    continue;
+                }
+
+                throw new InvalidServiceException($"{implementation.Name} lacks a valid ServiceAttribute", @interface, implementation);                 
             }
         }
 

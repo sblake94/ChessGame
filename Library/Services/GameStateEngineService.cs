@@ -7,7 +7,7 @@ namespace Library.Services;
 
 [SingletonService]
 public class GameStateEngineService
-    : ServiceBase
+    : ServiceBase<GameStateEngineService>
     , IGameStateEngineService
 {
     public BoardModel CurrentBoard { get; set; }
@@ -84,6 +84,11 @@ public class GameStateEngineService
             .First();
 
         if (matchingTile is null) { throw new TileNotFoundException(tileModel); }
+        if (matchingTile == SelectedTile)
+        {
+            SelectedTile = null;
+            return;
+        }
 
         SelectedTile = matchingTile;
     }
