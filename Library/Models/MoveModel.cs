@@ -1,5 +1,4 @@
-﻿using Library.Common;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Library.Models
 {
@@ -37,8 +36,6 @@ namespace Library.Models
             Board = board;
             OriginTile = origin;
             DestinationTile = destination;
-
-            
         }
 
         public void ExecuteMove()

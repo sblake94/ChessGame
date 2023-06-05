@@ -1,7 +1,4 @@
-﻿using Library.Common;
-using System.Net.Http.Headers;
-
-namespace Library.Models;
+﻿namespace Library.Models;
 
 public class PieceModel
 {
