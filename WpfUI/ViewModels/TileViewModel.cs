@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Library.Common;
 using Library.Models;
 using Library.Services;
 using System;
@@ -148,11 +149,6 @@ public class TileViewModel
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    internal void SetIndex(int v)
-    {
-        TileModel = _gameStateEngineService.CurrentBoard[v];
-    }
-
     internal void SetIndex(string boardRef)
     {
         TileModel = _gameStateEngineService.CurrentBoard[boardRef];
@@ -165,7 +161,9 @@ public class TileViewModel
 
     internal void MouseDown()
     {
-        _gameStateEngineService.SelectTile(_tileModel);
+        Validation.NotNull(_tileModel, nameof(TileModel));
+
+        _gameStateEngineService.ClickOnTile(_tileModel.xPos, _tileModel.yPos);
         RefreshAll();
     }
 

@@ -1,4 +1,4 @@
-using Library.Attributes.ServiceAttributes;
+﻿using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Models;
 using System.Numerics;
@@ -11,14 +11,18 @@ public class GameStateEngineService
     , IGameStateEngineService
 {
     private readonly INotationService _notationService;
+    private readonly IMoveHistoryService _moveHistoryService;
 
     public BoardModel CurrentBoard { get; set; }
     public TileModel? SelectedTile { get; set; }
 
 
-    public GameStateEngineService(INotationService notationService)
+    public GameStateEngineService(
+        INotationService notationService,
+        IMoveHistoryService moveHistoryService)
     {
         _notationService = notationService;
+        _moveHistoryService = moveHistoryService;
 
         ClearBoard();
         SetBoardToStartingPositions();
@@ -54,7 +58,7 @@ public class GameStateEngineService
         if(move.IsValid)
         {
             move.ExecuteMove();
-        }
+            _moveHistoryService.LogMove(move);
         }
 
         SelectedTile = null;

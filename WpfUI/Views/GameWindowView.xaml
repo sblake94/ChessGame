@@ -9,14 +9,16 @@
 		Title="GameWindowView" Height="auto" Width="auto">
     <StackPanel Margin="20" Orientation="Horizontal">
 
-		<local:GameBoardView/>
+		<local:GameBoardView VerticalAlignment="Center" 
+							 HorizontalAlignment="Center"
+							 Width="auto"
+							 Height="auto"/>
 
-		<Rectangle
-			HorizontalAlignment="Left"
-			Fill="#303030"
-			Margin="10"
-			Height="800"
-			Width="350"/>
+		<local:MoveHistoryView VerticalAlignment="Stretch" 
+							   HorizontalAlignment="Center"
+							   Width="auto"
+							   Height="auto"/>
+		
 		
 	</StackPanel>
 </Window>

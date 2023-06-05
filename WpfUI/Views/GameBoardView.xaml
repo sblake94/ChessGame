@@ -11,84 +11,77 @@
 	</UserControl.DataContext>
 
 	<UniformGrid Columns="8" Rows="8" Height="600">
-		<local:TileView BoardRef="A1"/>
-		<local:TileView BoardRef="A2"/>
-		<local:TileView BoardRef="A3"/>
-		<local:TileView BoardRef="A4"/>
-		<local:TileView BoardRef="A5"/>
-		<local:TileView BoardRef="A6"/>
-		<local:TileView BoardRef="A7"/>
 		<local:TileView BoardRef="A8"/>
-
-		<local:TileView BoardRef="B1"/>
-		<local:TileView BoardRef="B2"/>
-		<local:TileView BoardRef="B3"/>
-		<local:TileView BoardRef="B4"/>
-		<local:TileView BoardRef="B5"/>
-		<local:TileView BoardRef="B6"/>
-		<local:TileView BoardRef="B7"/>
 		<local:TileView BoardRef="B8"/>
-
-		<local:TileView BoardRef="C1"/>
-		<local:TileView BoardRef="C2"/>
-		<local:TileView BoardRef="C3"/>
-		<local:TileView BoardRef="C4"/>
-		<local:TileView BoardRef="C5"/>
-		<local:TileView BoardRef="C6"/>
-		<local:TileView BoardRef="C7"/>
 		<local:TileView BoardRef="C8"/>
-
-		<local:TileView BoardRef="D1"/>
-		<local:TileView BoardRef="D2"/>
-		<local:TileView BoardRef="D3"/>
-		<local:TileView BoardRef="D4"/>
-		<local:TileView BoardRef="D5"/>
-		<local:TileView BoardRef="D6"/>
-		<local:TileView BoardRef="D7"/>
 		<local:TileView BoardRef="D8"/>
-
-		<local:TileView BoardRef="E1"/>
-		<local:TileView BoardRef="E2"/>
-		<local:TileView BoardRef="E3"/>
-		<local:TileView BoardRef="E4"/>
-		<local:TileView BoardRef="E5"/>
-		<local:TileView BoardRef="E6"/>
-		<local:TileView BoardRef="E7"/>
 		<local:TileView BoardRef="E8"/>
-
-		<local:TileView BoardRef="F1"/>
-		<local:TileView BoardRef="F2"/>
-		<local:TileView BoardRef="F3"/>
-		<local:TileView BoardRef="F4"/>
-		<local:TileView BoardRef="F5"/>
-		<local:TileView BoardRef="F6"/>
-		<local:TileView BoardRef="F7"/>
 		<local:TileView BoardRef="F8"/>
-
-		<local:TileView BoardRef="G1"/>
-		<local:TileView BoardRef="G2"/>
-		<local:TileView BoardRef="G3"/>
-		<local:TileView BoardRef="G4"/>
-		<local:TileView BoardRef="G5"/>
-		<local:TileView BoardRef="G6"/>
-		<local:TileView BoardRef="G7"/>
 		<local:TileView BoardRef="G8"/>
-
-		<local:TileView BoardRef="H1"/>
-		<local:TileView BoardRef="H2"/>
-		<local:TileView BoardRef="H3"/>
-		<local:TileView BoardRef="H4"/>
-		<local:TileView BoardRef="H5"/>
-		<local:TileView BoardRef="H6"/>
-		<local:TileView BoardRef="H7"/>
 		<local:TileView BoardRef="H8"/>
 
-		<!--
-		<local:TileView BoardRef="A5" DataContext="{Binding Tiles[4]}"/>
-		<local:TileView BoardRef="A6" DataContext="{Binding Tiles[5]}"/>
-		<local:TileView BoardRef="A7" DataContext="{Binding Tiles[6]}"/>
-		<local:TileView BoardRef="A8" DataContext="{Binding Tiles[7]}"/>
-		-->
+		<local:TileView BoardRef="A7"/>
+		<local:TileView BoardRef="B7"/>
+		<local:TileView BoardRef="C7"/>
+		<local:TileView BoardRef="D7"/>
+		<local:TileView BoardRef="E7"/>
+		<local:TileView BoardRef="F7"/>
+		<local:TileView BoardRef="G7"/>
+		<local:TileView BoardRef="H7"/>
+
+		<local:TileView BoardRef="A6"/>
+		<local:TileView BoardRef="B6"/>
+		<local:TileView BoardRef="C6"/>
+		<local:TileView BoardRef="D6"/>
+		<local:TileView BoardRef="E6"/>
+		<local:TileView BoardRef="F6"/>
+		<local:TileView BoardRef="G6"/>
+		<local:TileView BoardRef="H6"/>
+
+		<local:TileView BoardRef="A5"/>
+		<local:TileView BoardRef="B5"/>
+		<local:TileView BoardRef="C5"/>
+		<local:TileView BoardRef="D5"/>
+		<local:TileView BoardRef="E5"/>
+		<local:TileView BoardRef="F5"/>
+		<local:TileView BoardRef="G5"/>
+		<local:TileView BoardRef="H5"/>
+
+		<local:TileView BoardRef="A4"/>
+		<local:TileView BoardRef="B4"/>
+		<local:TileView BoardRef="C4"/>
+		<local:TileView BoardRef="D4"/>
+		<local:TileView BoardRef="E4"/>
+		<local:TileView BoardRef="F4"/>
+		<local:TileView BoardRef="G4"/>
+		<local:TileView BoardRef="H4"/>
+
+		<local:TileView BoardRef="A3"/>
+		<local:TileView BoardRef="B3"/>
+		<local:TileView BoardRef="C3"/>
+		<local:TileView BoardRef="D3"/>
+		<local:TileView BoardRef="E3"/>
+		<local:TileView BoardRef="F3"/>
+		<local:TileView BoardRef="G3"/>
+		<local:TileView BoardRef="H3"/>
+
+		<local:TileView BoardRef="A2"/>
+		<local:TileView BoardRef="B2"/>
+		<local:TileView BoardRef="C2"/>
+		<local:TileView BoardRef="D2"/>
+		<local:TileView BoardRef="E2"/>
+		<local:TileView BoardRef="F2"/>
+		<local:TileView BoardRef="G2"/>
+		<local:TileView BoardRef="H2"/>
+
+		<local:TileView BoardRef="A1"/>
+		<local:TileView BoardRef="B1"/>
+		<local:TileView BoardRef="C1"/>
+		<local:TileView BoardRef="D1"/>
+		<local:TileView BoardRef="E1"/>
+		<local:TileView BoardRef="F1"/>
+		<local:TileView BoardRef="G1"/>
+		<local:TileView BoardRef="H1"/>
 
 	</UniformGrid>
 </UserControl>

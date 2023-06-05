@@ -16,7 +16,6 @@ public partial class GameBoardViewModel
 {
     private readonly IGameStateEngineService _gameStateEngineService;
 
-    public ICommand OnTileClicked { get; }
 
     public TileViewModel[] Tiles
     {
@@ -25,18 +24,9 @@ public partial class GameBoardViewModel
 
     public GameBoardViewModel()
     {
-        OnTileClicked = new RelayCommand<string>(Handle_OnTileClicked);
-
         // TODO: This should be done via constructor injection, but it works for now
         _gameStateEngineService = Ioc.Default.GetRequiredService<IGameStateEngineService>();
 
-    }
-
-    [RelayCommand]
-    private void Handle_OnTileClicked(string? tileID)
-    {
-        TileModel clickedTile = TileModel.CreateFromTileID(tileID);
-        _gameStateEngineService.SelectTile(clickedTile);
     }
 
     private TileViewModel[] BuildTileViewModels()

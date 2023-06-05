@@ -8,11 +8,18 @@ public class PieceModel
     public Guid Id = Guid.NewGuid();
 
     public int? CurrentPiece { get; set; }
+    public string ToString 
+    {
+        get
+        {
+            return $"{MyTeam} {MyUnit}";
+        }
+    }
 
     public enum TeamType
     {
-        WhiteTeam = 0, 
-        BlackTeam = 1
+        White = 0, 
+        Black = 1
     }
     public TeamType MyTeam
     { 

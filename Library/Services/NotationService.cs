@@ -30,14 +30,14 @@ public class NotationService
     {
         BoardModel board = new BoardModel();
         string fenboard = fenString.Split(' ')[0];
-        int x = 0, y = 0;
+        int x = 0, y = 7;
 
         foreach(char symbol in fenboard)
         {
             if(symbol == '/')
             {
                 x = 0;
-                y++;
+                y--;
             }
             else
             {
@@ -49,7 +49,7 @@ public class NotationService
                 {
                     var piece = PieceFromSymbol(symbol);
 
-                    board[x * 8 + y].OccupyingPiece = piece;
+                    board[x, y].OccupyingPiece = piece;
                     x++;
                 }
             }
@@ -61,19 +61,19 @@ public class NotationService
     {
         switch (symbol)
         {
-            case 'k': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.King);
-            case 'q': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.Queen);
-            case 'b': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.Bishop);
-            case 'n': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.Knight);
-            case 'r': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.Rook);
-            case 'p': return new PieceModel(PieceModel.TeamType.BlackTeam, PieceModel.UnitType.Pawn);
+            case 'k': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.King);
+            case 'q': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Queen);
+            case 'b': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Bishop);
+            case 'n': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Knight);
+            case 'r': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Rook);
+            case 'p': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Pawn);
 
-            case 'K': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.King);
-            case 'Q': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.Queen);
-            case 'B': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.Bishop);
-            case 'N': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.Knight);
-            case 'R': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.Rook);
-            case 'P': return new PieceModel(PieceModel.TeamType.WhiteTeam, PieceModel.UnitType.Pawn);
+            case 'K': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.King);
+            case 'Q': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Queen);
+            case 'B': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Bishop);
+            case 'N': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Knight);
+            case 'R': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Rook);
+            case 'P': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Pawn);
             
             default:
                 throw new InvalidArgumentException(nameof(symbol));

@@ -12,6 +12,17 @@ namespace Library.Models
         public BoardModel Board { get; }
         public TileModel OriginTile { get; }
         public TileModel DestinationTile { get; }
+        public bool MoveExecuted { get; set; }
+
+        public string LogMessage { 
+            get
+            {
+                if (MoveExecuted)
+                    return $"Moved {DestinationTile.OccupyingPiece.ToString} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
+                else
+                    return $"Intention to move {OriginTile.OccupyingPiece.ToString} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
+            }
+        }
 
         public bool IsValid
         {
@@ -27,14 +38,14 @@ namespace Library.Models
             OriginTile = origin;
             DestinationTile = destination;
 
-            _logger = new DefaultLogger();
+            
         }
 
         public void ExecuteMove()
         {
             Board[DestinationTile.ClassicCoords].OccupyingPiece = OriginTile.OccupyingPiece;
             OriginTile.OccupyingPiece = PieceModel.None;
-
+            MoveExecuted = true;
             LogMove();
         }
 

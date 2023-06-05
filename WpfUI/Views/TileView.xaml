@@ -5,26 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfUI.Views"
 			 xmlns:vm="clr-namespace:WpfUI.ViewModels"
+			 xmlns:cnv="clr-namespace:WpfUI.Converters"
              mc:Ignorable="d"
 			 MouseEnter="TileView_MouseEnter"
 			 MouseDown="TileView_MouseDown"
-			 MouseLeave="TileView_MouseLeave"
-			 >
+			 MouseLeave="TileView_MouseLeave">
 
 	<UserControl.DataContext>
 		<vm:TileViewModel/>
 	</UserControl.DataContext>
 
+	<UserControl.Resources>
+		<cnv:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
+	</UserControl.Resources>
+	
 	<Grid>
 		<Rectangle Fill="{Binding TileBGColor}" 
 				   Width="75" 
 				   Height="75"/>
-		<Image Source="{Binding ImageSource}" 
-				Width="75" 
-				Height="75" 
+		<Image Source="{Binding ImageSource, Converter={StaticResource StringToImageSourceConverter}}" 
+				Width="65" 
+				Height="65" 
 				Stretch="Fill" 
 				HorizontalAlignment="Center" 
-				VerticalAlignment="Center"/>
+				VerticalAlignment="Bottom"/>
+		<Label Content="{Binding TileModel.ClassicCoords}"
+			   FontFamily="Montserrat"
+			   FontSize="12"
+			   HorizontalAlignment="Left"
+			   VerticalAlignment="Top"
+			   Foreground="Gray"/>
+		
 		<Border x:Name="MouseOverBorder" 
 				Width="75" 
 				Height="75" 
