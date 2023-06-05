@@ -1,9 +1,14 @@
-﻿namespace Library.Services;
+using Microsoft.Extensions.Logging;
+
+namespace Library.Services;
 
 public class ServiceBase<T>
     where T : ServiceBase<T>
 {
-    public ServiceBase()
+    private readonly ILogger<T>? _logger;
+
+    public ServiceBase(ILogger<T> logger)
     {
+        _logger = logger;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Models;
+using Microsoft.Extensions.Logging;
 using System.Numerics;
 
 namespace Library.Services;
@@ -19,7 +20,9 @@ public class GameStateEngineService
 
     public GameStateEngineService(
         INotationService notationService,
-        IMoveHistoryService moveHistoryService)
+        IMoveHistoryService moveHistoryService,
+        ILogger<GameStateEngineService> logger)
+        : base(logger)
     {
         _notationService = notationService;
         _moveHistoryService = moveHistoryService;

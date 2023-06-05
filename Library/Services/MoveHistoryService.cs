@@ -1,5 +1,6 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 
 namespace Library.Services;
@@ -11,7 +12,8 @@ public class MoveHistoryService
 {
     public ObservableCollection<MoveModel> MoveHistory { get; } = new ObservableCollection<MoveModel>();
 
-    public MoveHistoryService()
+    public MoveHistoryService(ILogger<MoveHistoryService> logger)
+        : base(logger)
     {
         
     }

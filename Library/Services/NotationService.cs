@@ -1,6 +1,7 @@
-﻿using Library.Attributes.ServiceAttributes;
+using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Library.Services;
 
@@ -11,7 +12,8 @@ public class NotationService
 {
     const string StartingBoard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    public NotationService() 
+    public NotationService(ILogger<NotationService> logger) 
+        : base(logger)
     {
 
     }
