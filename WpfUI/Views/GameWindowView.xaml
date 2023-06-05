@@ -12,12 +12,20 @@
 		<local:GameBoardView VerticalAlignment="Center" 
 							 HorizontalAlignment="Center"
 							 Width="auto"
-							 Height="auto"/>
+							 Height="600"/>
 
-		<local:MoveHistoryView VerticalAlignment="Stretch" 
-							   HorizontalAlignment="Center"
-							   Width="auto"
-							   Height="auto"/>
+		<Grid Width="auto"
+				Height="600">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="3*"/>
+			</Grid.RowDefinitions>
+			<local:MoveHistoryView VerticalAlignment="Stretch" 
+								   HorizontalAlignment="Center"
+								   Grid.Row="1"
+								   Width="auto"
+								   Height="auto"/>
+		</Grid>
 		
 		
 	</StackPanel>
