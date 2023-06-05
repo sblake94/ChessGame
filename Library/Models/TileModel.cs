@@ -19,7 +19,20 @@ namespace Library.Models
         public bool IsNotEmpty { get { return OccupyingPiece != PieceModel.None; } }
         public bool IsLightTile { get { return (xPos + yPos) % 2 == 0; } }
 
-        public PieceModel OccupyingPiece { get; set; }
+
+        private PieceModel _occupyingPiece;
+
+        public PieceModel OccupyingPiece
+        {
+            get 
+            { 
+                return _occupyingPiece; 
+            }
+            set 
+            {
+                _occupyingPiece = value; 
+            }
+        }
 
         public TileModel(int xPos, int yPos, PieceModel? occupyingPiece = null)
         {
