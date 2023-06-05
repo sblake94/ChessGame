@@ -1,4 +1,4 @@
-using Library.Attributes.ServiceAttributes;
+﻿using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Models;
 using Microsoft.Extensions.Logging;
@@ -23,7 +23,7 @@ public class NotationService
         return FromFen(StartingBoard);
     }
 
-    private string ToFen(BoardModel board)
+    public string ToFen(BoardModel board)
     {
         throw new NotImplementedException();
     }
