@@ -12,8 +12,8 @@ public class MoveHistoryService
 {
     public ObservableCollection<MoveModel> MoveHistory { get; } = new ObservableCollection<MoveModel>();
 
-    public MoveHistoryService(ILogger<MoveHistoryService> logger)
-        : base(logger)
+    public MoveHistoryService(ILoggerFactoryService loggerFactoryService)
+        : base(loggerFactoryService)
     {
         
     }

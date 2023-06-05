@@ -12,8 +12,8 @@ public class NotationService
 {
     const string StartingBoard = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
-    public NotationService(ILogger<NotationService> logger) 
-        : base(logger)
+    public NotationService(ILoggerFactoryService loggerFactoryService) 
+        : base(loggerFactoryService)
     {
 
     }
