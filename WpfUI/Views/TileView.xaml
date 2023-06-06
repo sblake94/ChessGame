@@ -23,12 +23,14 @@
 		<Rectangle Fill="{Binding TileBGColor}" 
 				   Width="75" 
 				   Height="75"/>
+		
 		<Image Source="{Binding ImageSource, Converter={StaticResource StringToImageSourceConverter}}" 
 				Width="65" 
 				Height="65" 
 				Stretch="Fill" 
 				HorizontalAlignment="Center" 
 				VerticalAlignment="Bottom"/>
+		
 		<Label Content="{Binding TileModel.ClassicCoords}"
 			   FontFamily="Montserrat"
 			   FontSize="12"

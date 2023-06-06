@@ -1,17 +1,15 @@
-﻿namespace Library.Models;
+﻿using Library.Exceptions;
+
+namespace Library.Models;
 
 public class PieceModel
 {
     public Guid Id = Guid.NewGuid();
+    public static Dictionary<Guid, PieceModel> registeredPieces = new Dictionary<Guid, PieceModel>();
 
     public int? CurrentPiece { get; set; }
-    public string ToString 
-    {
-        get
-        {
-            return $"{MyTeam} {MyUnit}";
-        }
-    }
+    public bool IsInPlay { get; set; } = true;
+    public TileModel? StartingTile { get; } = null;
 
     public enum TeamType
     {
@@ -44,14 +42,25 @@ public class PieceModel
         }
     }
 
-    public PieceModel(TeamType team, UnitType unit)
+    public PieceModel(TeamType team, UnitType unit, TileModel? originTile = null)
     {
         CurrentPiece = (int)team * 8 + (int)unit;
+        StartingTile = originTile;
+
+        registeredPieces.Add(Id, this);
     }
 
-    public PieceModel(int currentPiece)
+    public PieceModel(int currentPiece, TileModel? originTile = null)
     {
         CurrentPiece = currentPiece;
+        StartingTile = originTile;
+
+        if(currentPiece == 0)
+        {
+            return;
+        }
+
+        registeredPieces.Add(Id, this);
     }
 
     public static PieceModel None = new PieceModel(0);
@@ -70,4 +79,46 @@ public class PieceModel
     public static PieceModel BlackQueen = new PieceModel(13);
     public static PieceModel BlackKing = new PieceModel(14);
 
+
+    public static bool operator ==(PieceModel? a, PieceModel? b)
+    {
+        if (a is null && b is null) { return true; }
+        if (a is null || b is null) { return false; }
+
+        return a.Id == b.Id;
+    }
+
+    public static bool operator !=(PieceModel? a, PieceModel? b)
+    {
+        if (a is null && b is null) { return true; }
+        if (a is null || b is null) { return false; }
+
+        return !(a == b);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (ReferenceEquals(obj, null))
+        {
+            return false;
+        }
+
+        throw new NotImplementedException();
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public override string? ToString()
+    {
+
+        return $"{MyTeam} {MyUnit}";
+    }
 }

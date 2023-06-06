@@ -49,9 +49,10 @@ public class NotationService
                 }
                 else
                 {
-                    var piece = PieceFromSymbol(symbol);
+                    var tile = board[x, y];
+                    var piece = PieceFromSymbol(symbol, tile);
 
-                    board[x, y].OccupyingPiece = piece;
+                    tile.OccupyingPiece = piece;
                     x++;
                 }
             }
@@ -59,23 +60,23 @@ public class NotationService
         return board;
     }
 
-    private PieceModel PieceFromSymbol(char symbol)
+    private PieceModel PieceFromSymbol(char symbol, TileModel tile)
     {
         switch (symbol)
         {
-            case 'k': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.King);
-            case 'q': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Queen);
-            case 'b': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Bishop);
-            case 'n': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Knight);
-            case 'r': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Rook);
-            case 'p': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Pawn);
+            case 'k': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.King, tile);
+            case 'q': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Queen, tile);
+            case 'b': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Bishop, tile);
+            case 'n': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Knight, tile);
+            case 'r': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Rook, tile);
+            case 'p': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Pawn, tile);
 
-            case 'K': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.King);
-            case 'Q': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Queen);
-            case 'B': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Bishop);
-            case 'N': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Knight);
-            case 'R': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Rook);
-            case 'P': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Pawn);
+            case 'K': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.King, tile);
+            case 'Q': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Queen, tile);
+            case 'B': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Bishop, tile);
+            case 'N': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Knight, tile);
+            case 'R': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Rook, tile);
+            case 'P': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Pawn, tile);
             
             default:
                 throw new InvalidArgumentException(nameof(symbol));

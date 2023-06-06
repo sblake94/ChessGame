@@ -5,6 +5,7 @@ using Library.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
@@ -35,22 +36,44 @@ public class TileViewModel
     private static string WHITE_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKing.png";
 
     private readonly IGameStateEngineService _gameStateEngineService;
+    private readonly IMoveBlueprintingService _moveBlueprintingService;
     private TileModel? _tileModel;
 
     static List<TileViewModel> instances = new List<TileViewModel>();
 
     public new event PropertyChangedEventHandler? PropertyChanged;
 
-    public Thickness SelectedBorderThickness => 
+    public Thickness SelectedBorderThickness =>
         new Thickness(IsHighlighted ? 5 : 0);
 
     public Thickness MouseOverBorderThickness =>
         new Thickness(MouseIsOver ? 2 : 0);
 
-    public Brush TileBGColor => _tileModel != null ?
-     (_tileModel.IsLightTile ? LIGHT_TILE_COLOR : DARK_TILE_COLOR) :
-     Brushes.Magenta;
+    public Brush TileBGColor
+    {
+        get
+        {
+            if(_gameStateEngineService.SelectedTile is not null)
+            {
+                // Get possible moves for the selected tile
+                var possibleMoves = _moveBlueprintingService.GetAllPossibleMoves(
+                    _gameStateEngineService.SelectedTile, 
+                    _gameStateEngineService.CurrentBoard)
+                    .Where(eachMove => eachMove.DestinationTile == _tileModel);
+                
+                // If the current tile is a possible move, highlight it
+                if (possibleMoves.Any())
+                {
+                    return Brushes.Green;
+                }
+            }
 
+
+            return _tileModel != null 
+                ? (_tileModel.IsLightTile ? LIGHT_TILE_COLOR : DARK_TILE_COLOR) 
+                : Brushes.Magenta;
+        }
+    }
     public string ImageSource 
     {
         get
@@ -136,6 +159,7 @@ public class TileViewModel
     public TileViewModel()
     {
         _gameStateEngineService = Ioc.Default.GetRequiredService<IGameStateEngineService>();
+        _moveBlueprintingService = Ioc.Default.GetRequiredService<IMoveBlueprintingService>();
         instances.Add(this);
     }
 
@@ -163,7 +187,7 @@ public class TileViewModel
     {
         Validation.NotNull(_tileModel, nameof(TileModel));
 
-        _gameStateEngineService.ClickOnTile(_tileModel.xPos, _tileModel.yPos);
+        _gameStateEngineService.ClickOnTile(_tileModel.X, _tileModel.Y);
         RefreshAll();
     }
 

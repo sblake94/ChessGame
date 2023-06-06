@@ -14,19 +14,31 @@ public class GameStateEngineService
 {
     private readonly INotationService _notationService;
     private readonly IMoveHistoryService _moveHistoryService;
+    private readonly IMoveBlueprintingService _moveBlueprintingService;
 
     public BoardModel CurrentBoard { get; set; }
     public TileModel? SelectedTile { get; set; }
+    public List<MoveModel> PossibleMoves 
+    { 
+        get 
+        { 
+            return SelectedTile is not null 
+                ? _moveBlueprintingService.GetAllPossibleMoves(SelectedTile, CurrentBoard) 
+                : new List<MoveModel>(); 
+        } 
+    } 
 
 
     public GameStateEngineService(
         INotationService notationService,
         IMoveHistoryService moveHistoryService,
+        IMoveBlueprintingService moveBlueprintingService,
         ILoggerFactoryService loggerFactoryService)
         : base(loggerFactoryService)
     {
         _notationService = notationService;
         _moveHistoryService = moveHistoryService;
+        _moveBlueprintingService = moveBlueprintingService;
 
         ClearBoard();
         SetBoardToStartingPositions();
@@ -45,11 +57,10 @@ public class GameStateEngineService
     public void ClickOnTile(int xPos, int yPos)
     {
         TileModel? clickedTile = CurrentBoard
-            .Where(tile => tile.xPos == xPos)
-            .Where(tile => tile.yPos == yPos)
+            .Where(tile => tile.X == xPos)
+            .Where(tile => tile.Y == yPos)
             .FirstOrDefault();
 
-        var move = new MoveModel(CurrentBoard, SelectedTile, clickedTile);
 
         if (clickedTile is null) { throw new TileNotFoundException(new TileModel(xPos, yPos)); }
 
@@ -59,7 +70,8 @@ public class GameStateEngineService
             return; 
         }
 
-        if(move.IsValid)
+        var move = new MoveModel(CurrentBoard, SelectedTile, clickedTile);
+        if(_moveBlueprintingService.IsValidMove(move))
         {
             move.ExecuteMove();
             _moveHistoryService.LogMove(move);

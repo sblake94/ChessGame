@@ -35,7 +35,7 @@ public partial class GameBoardViewModel
         var result = new TileViewModel[64];
         foreach(var tile in tiles)
         {
-            int idx = tile.xPos + tile.yPos * 8;
+            int idx = tile.X + tile.Y * 8;
             var tvm = new TileViewModel();
             tvm.TileModel = tile;
 

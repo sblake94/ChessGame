@@ -34,8 +34,8 @@ namespace Library.Models
             startingTile.OccupyingPiece = PieceModel.None;
             destinationTile.OccupyingPiece = piece;
 
-            this._tiles[startingTile.xPos, startingTile.yPos] = startingTile;
-            this._tiles[destinationTile.xPos, destinationTile.yPos] = destinationTile;
+            this._tiles[startingTile.X, startingTile.Y] = startingTile;
+            this._tiles[destinationTile.X, destinationTile.Y] = destinationTile;
 
             return this;
         }
