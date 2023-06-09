@@ -16,7 +16,9 @@
 			<Setter Property="Foreground" Value="White"/>
 			<Setter Property="Margin" Value="20,20,0,0"/>
 		</Style>
-		<Style x:Key="DataDisplay" TargetType="{x:Type Label}" BasedOn="{StaticResource Title}">
+		<Style x:Key="DataDisplay" 
+			   TargetType="{x:Type Label}" 
+			   BasedOn="{StaticResource Title}">
 			<Setter Property="FontSize" Value="18"/>
 		</Style>
 
@@ -25,7 +27,8 @@
 		<vm:GameDataViewModel/>
 	</UserControl.DataContext>
 
-	<Border Background="#333333">
+	<Border Background="#333333" 
+			CornerRadius="5">
 		<StackPanel>
 			<Label Style="{StaticResource ResourceKey=Title}"
 				   Content="{Binding TitleContent}"/>

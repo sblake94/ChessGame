@@ -3,14 +3,58 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="clr-namespace:WpfUI.ViewModels"
         xmlns:local="clr-namespace:WpfUI.Views"
         mc:Ignorable="d"
 		Background="#202020"
 		Title="GameWindowView" Height="auto" Width="auto">
-    <StackPanel Margin="20" 
+
+	<Window.Resources>
+		<Style x:Key="LeftFlyoutButton" TargetType="{x:Type Button}">
+			<Setter Property="Background" Value="#333333"/>
+			<Setter Property="Width" Value="100"/>
+			<Setter Property="Height" Value="50"/>
+			<Setter Property="Margin" Value="10,10,10,10"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="FontFamily" Value="Montserrat"/>
+			<Setter Property="FontSize" Value="14"/>
+			<Setter Property="FontWeight" Value="SemiBold"/>
+		</Style>
+		<Style x:Key="FlyoutMenuButton" TargetType="{x:Type Button}">
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Foreground" Value="DarkGray"/>
+			<Setter Property="FontFamily" Value="Montserrat"/>
+			<Setter Property="FontSize" Value="32"/>
+			<Setter Property="Margin" Value="0,5,0,5"/>
+		</Style>
+	</Window.Resources>
+	<Window.DataContext>
+		<vm:GameWindowViewModel/>
+	</Window.DataContext>
+	
+    <StackPanel Margin="0,0,0,0"
 				Orientation="Horizontal"
 				HorizontalAlignment="Left">
 
+		<StackPanel Background="#111111" Margin="0,0,20,0">
+			<Button Content="☰"
+					Style="{StaticResource FlyoutMenuButton}"
+					Command="{Binding CMD_OpenFlyout}"/>
+
+			<Button Content="New Game"
+					Style="{StaticResource LeftFlyoutButton}"
+					Command="{Binding CMD_NewGameCommand}"/>
+			
+			<Button Content="Undo"
+					Style="{StaticResource LeftFlyoutButton}"
+					Command="{Binding CMD_UndoCommand}"/>
+			
+			<Button Content="Redo"
+					Style="{StaticResource LeftFlyoutButton}"
+					Command="{Binding CMD_RedoCommand}"/>
+		</StackPanel>
+		
 		<local:GameBoardView VerticalAlignment="Center" 
 							 HorizontalAlignment="Center"
 							 Width="auto"
