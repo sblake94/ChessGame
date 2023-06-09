@@ -1,10 +1,10 @@
-﻿using Library.Attributes.ServiceAttributes;
-using Library.Models;
+﻿using Library.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Library.Services;
 
-public interface IChessLogicFacadeService
+public interface IChessLogicFacadeService : INotifyPropertyChanged
 {
     public TileModel? SelectedTile { get; }
     public BoardModel? CurrentBoard { get; }

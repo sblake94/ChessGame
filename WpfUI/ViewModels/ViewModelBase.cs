@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Library.Services;
 using System.ComponentModel;
 
 namespace WpfUI.ViewModels
@@ -9,9 +11,13 @@ namespace WpfUI.ViewModels
     /// <typeparam name="T">Must inherit from ViewModelBase</typeparam>
     public abstract class ViewModelBase<T> 
         : ObservableObject
-        , INotifyPropertyChanged
         where T : ViewModelBase<T>
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
+        protected readonly IChessLogicFacadeService _chessLogicFacadeService;
+
+        public ViewModelBase()
+        {
+            _chessLogicFacadeService = Ioc.Default.GetRequiredService<IChessLogicFacadeService>();
+        }
     }
 }

@@ -3,6 +3,7 @@ using Library.Exceptions;
 using Library.Logging;
 using Library.Models;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace Library.Services;
@@ -11,13 +12,36 @@ namespace Library.Services;
 public class GameStateEngineService
     : ServiceBase<GameStateEngineService>
     , IGameStateEngineService
+    , INotifyPropertyChanged
 {
     private readonly INotationService _notationService;
     private readonly IMoveHistoryService _moveHistoryService;
     private readonly IMoveBlueprintingService _moveBlueprintingService;
 
     public BoardModel CurrentBoard { get; set; }
-    public TileModel? SelectedTile { get; set; }
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private TileModel? _selectedTile;
+    public TileModel? SelectedTile 
+    {
+        get { return _selectedTile; }
+        set 
+        { 
+            if(_selectedTile != value)
+            {
+                _selectedTile = value;
+                OnPropertyChanged(nameof(SelectedTile));
+            }
+        }
+    }
+
+    private void OnPropertyChanged(string v)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v)); 
+    }
+
     public List<MoveModel> PossibleMoves 
     { 
         get 

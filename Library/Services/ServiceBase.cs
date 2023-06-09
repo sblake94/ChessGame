@@ -1,13 +1,13 @@
 ﻿using Library.Logging;
-using Microsoft.Extensions.Logging;
 
 namespace Library.Services;
 
 public class ServiceBase<T>
     where T : ServiceBase<T>
 {
-    public readonly Guid Id = Guid.NewGuid();
+    public Guid Id { get; init; } = Guid.NewGuid();
     private protected IServiceLogger<T>? _logger;
+
     public bool IsLoggingEnabled => _logger is not null;
 
     public ServiceBase(ILoggerFactoryService? loggerFactory = null)

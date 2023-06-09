@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="WpfUI.Views.GameDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:vm="clr-namespace:WpfUI.ViewModels"
+             xmlns:local="clr-namespace:WpfUI.Views"
+             mc:Ignorable="d"
+			 Width="400" Height="250"
+			 Margin="20,0,0,20">
+
+	<UserControl.Resources>
+		<Style x:Key="Title" TargetType="{x:Type Label}">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="FontFamily" Value="Montserrat"/>
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="Margin" Value="20,20,0,0"/>
+		</Style>
+		<Style x:Key="DataDisplay" TargetType="{x:Type Label}" BasedOn="{StaticResource Title}">
+			<Setter Property="FontSize" Value="18"/>
+		</Style>
+
+	</UserControl.Resources>
+	<UserControl.DataContext>
+		<vm:GameDataViewModel/>
+	</UserControl.DataContext>
+
+	<Border Background="#333333">
+		<StackPanel>
+			<Label Style="{StaticResource ResourceKey=Title}"
+				   Content="{Binding TitleContent}"/>
+
+			<Label Style="{StaticResource ResourceKey=DataDisplay}"
+				   Content="{Binding Team}"/>
+
+			<Label Style="{StaticResource ResourceKey=DataDisplay}"
+				   Content="{Binding UnitType}"/>
+
+			<Label Style="{StaticResource ResourceKey=DataDisplay}"
+				   Content="{Binding Coords}"/>
+		</StackPanel>
+	</Border>
+	
+</UserControl>

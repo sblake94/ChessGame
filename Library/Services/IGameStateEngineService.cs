@@ -1,10 +1,11 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
+using System.ComponentModel;
 
 namespace Library.Services;
 
 
-public interface IGameStateEngineService
+public interface IGameStateEngineService : INotifyPropertyChanged
 {
     public BoardModel CurrentBoard { get; }
     public TileModel SelectedTile { get; }

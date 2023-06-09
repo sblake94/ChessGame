@@ -1,6 +1,7 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Library.Services;
 
@@ -8,11 +9,37 @@ namespace Library.Services;
 public class ChessLogicFacadeService
     : ServiceBase<ChessLogicFacadeService>
     , IChessLogicFacadeService
+    , INotifyPropertyChanged
 {
     private readonly IGameStateEngineService _gameStateEngineService;
     private readonly IMoveBlueprintingService _moveBlueprintingService;
     private readonly IMoveHistoryService _moveHistoryService;
     private readonly INotationService _notationService;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private TileModel? _selectedTile;
+
+    public TileModel? SelectedTile
+    {
+        get { return _selectedTile; }
+        set 
+        { 
+            if(_selectedTile != value)
+            {
+                _selectedTile = value;
+                OnPropertyChanged(nameof(SelectedTile));
+            }
+        }
+    }
+    public BoardModel? CurrentBoard => _gameStateEngineService.CurrentBoard;
+
+    public ObservableCollection<MoveModel> MoveHistory => _moveHistoryService.MoveHistory;
+
+    private void OnPropertyChanged(string v)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+    }
 
     public ChessLogicFacadeService(
         IGameStateEngineService gameStateEngineService, 
@@ -25,13 +52,16 @@ public class ChessLogicFacadeService
         _moveBlueprintingService = moveBlueprintingService;
         _moveHistoryService = moveHistoryService;
         _notationService = notationService;
+
+        _gameStateEngineService.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(_gameStateEngineService.SelectedTile))
+            {
+                SelectedTile = _gameStateEngineService.SelectedTile;
+                OnPropertyChanged(nameof(SelectedTile));
+            }
+        };
     }
-
-    public TileModel? SelectedTile => _gameStateEngineService.SelectedTile;
-
-    public BoardModel? CurrentBoard => _gameStateEngineService.CurrentBoard;
-
-    public ObservableCollection<MoveModel> MoveHistory => _moveHistoryService.MoveHistory;
 
     public void ClickOnTile(int x, int y)
     {

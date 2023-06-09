@@ -7,21 +7,28 @@
         mc:Ignorable="d"
 		Background="#202020"
 		Title="GameWindowView" Height="auto" Width="auto">
-    <StackPanel Margin="20" Orientation="Horizontal">
+    <StackPanel Margin="20" 
+				Orientation="Horizontal"
+				HorizontalAlignment="Left">
 
 		<local:GameBoardView VerticalAlignment="Center" 
 							 HorizontalAlignment="Center"
 							 Width="auto"
 							 Height="600"/>
 
-		<Grid Width="auto"
-				Height="600">
+		<Grid HorizontalAlignment="Left"
+			  Width="450"
+			  Height="600">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="auto"/>
 				<RowDefinition Height="*"/>
-				<RowDefinition Height="3*"/>
 			</Grid.RowDefinitions>
+
+			<local:GameDataView Grid.Row="0"
+								Margin="0"/>
+
 			<local:MoveHistoryView VerticalAlignment="Stretch" 
-								   HorizontalAlignment="Center"
+								   HorizontalAlignment="Left"
 								   Grid.Row="1"
 								   Width="auto"
 								   Height="auto"/>
