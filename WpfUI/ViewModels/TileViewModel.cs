@@ -35,8 +35,8 @@ public class TileViewModel
     private static string WHITE_QUEE_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteQueen.png";
     private static string WHITE_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKing.png";
 
-    private readonly IGameStateEngineService _gameStateEngineService;
-    private readonly IMoveBlueprintingService _moveBlueprintingService;
+    private readonly IChessLogicFacadeService _chessLogicFacadeService;
+
     private TileModel? _tileModel;
 
     static List<TileViewModel> instances = new List<TileViewModel>();
@@ -53,12 +53,12 @@ public class TileViewModel
     {
         get
         {
-            if(_gameStateEngineService.SelectedTile is not null)
+            if(_chessLogicFacadeService.SelectedTile is not null)
             {
                 // Get possible moves for the selected tile
-                var possibleMoves = _moveBlueprintingService.GetAllPossibleMoves(
-                    _gameStateEngineService.SelectedTile, 
-                    _gameStateEngineService.CurrentBoard)
+                var possibleMoves = _chessLogicFacadeService.GetAllPossibleMoves(
+                    _chessLogicFacadeService.SelectedTile,
+                    _chessLogicFacadeService.CurrentBoard)
                     .Where(eachMove => eachMove.DestinationTile == _tileModel);
                 
                 // If the current tile is a possible move, highlight it
@@ -129,7 +129,7 @@ public class TileViewModel
     {
         get 
         {
-            _isHighlighted = _gameStateEngineService.SelectedTile == this.TileModel;
+            _isHighlighted = _chessLogicFacadeService.SelectedTile == this.TileModel;
             return _isHighlighted; 
         }
         set
@@ -158,8 +158,7 @@ public class TileViewModel
 
     public TileViewModel()
     {
-        _gameStateEngineService = Ioc.Default.GetRequiredService<IGameStateEngineService>();
-        _moveBlueprintingService = Ioc.Default.GetRequiredService<IMoveBlueprintingService>();
+        _chessLogicFacadeService = Ioc.Default.GetRequiredService<IChessLogicFacadeService>();
         instances.Add(this);
     }
 
@@ -175,7 +174,7 @@ public class TileViewModel
 
     internal void SetIndex(string boardRef)
     {
-        TileModel = _gameStateEngineService.CurrentBoard[boardRef];
+        TileModel = _chessLogicFacadeService.CurrentBoard[boardRef];
     }
 
     internal void MouseEnter()
@@ -187,7 +186,7 @@ public class TileViewModel
     {
         Validation.NotNull(_tileModel, nameof(TileModel));
 
-        _gameStateEngineService.ClickOnTile(_tileModel.X, _tileModel.Y);
+        _chessLogicFacadeService.ClickOnTile(_tileModel.X, _tileModel.Y);
         RefreshAll();
     }
 

@@ -8,20 +8,20 @@ namespace WpfUI.ViewModels
 {
     public class MoveHistoryViewModel
     {
-        private readonly IMoveHistoryService _moveHistoryService;
+        private readonly IChessLogicFacadeService _chessLogicFacadeService;
 
         
         public ObservableCollection<MoveModel> MoveHistory
         {
             get
             {
-                return _moveHistoryService.MoveHistory;
+                return _chessLogicFacadeService.MoveHistory;
             }
         }
 
         public MoveHistoryViewModel()
         {
-            _moveHistoryService = Ioc.Default.GetRequiredService<IMoveHistoryService>();
+            _chessLogicFacadeService = Ioc.Default.GetRequiredService<IChessLogicFacadeService>();
         }
     }
 }

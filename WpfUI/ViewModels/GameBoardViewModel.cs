@@ -14,7 +14,7 @@ namespace WpfUI.ViewModels;
 public partial class GameBoardViewModel
     : ViewModelBase<GameBoardViewModel>
 {
-    private readonly IGameStateEngineService _gameStateEngineService;
+    private readonly IChessLogicFacadeService _chessLogicFacadeService;
 
 
     public TileViewModel[] Tiles
@@ -25,13 +25,13 @@ public partial class GameBoardViewModel
     public GameBoardViewModel()
     {
         // TODO: This should be done via constructor injection, but it works for now
-        _gameStateEngineService = Ioc.Default.GetRequiredService<IGameStateEngineService>();
+        _chessLogicFacadeService = Ioc.Default.GetRequiredService<IChessLogicFacadeService>();
 
     }
 
     private TileViewModel[] BuildTileViewModels()
     {
-        var tiles = _gameStateEngineService.CurrentBoard;
+        var tiles = _chessLogicFacadeService.CurrentBoard;
         var result = new TileViewModel[64];
         foreach(var tile in tiles)
         {

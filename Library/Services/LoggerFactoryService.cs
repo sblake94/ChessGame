@@ -26,7 +26,7 @@ public class LoggerFactoryService
         IServiceLogger<T> logger = new ServiceLogger<T>();
         service.SetLogger(logger);
 
-        loggers.Add(typeof(T), logger);
+        loggers.TryAdd(typeof(T), logger);
     }
 
     public IServiceLogger<T> GetServiceLogger<T>() where T : ServiceBase<T>
