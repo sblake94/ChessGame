@@ -1,5 +1,6 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
+using Library.Models.Game;
 using System.ComponentModel;
 
 namespace Library.Services;
@@ -7,7 +8,7 @@ namespace Library.Services;
 
 public interface IGameStateEngineService : INotifyPropertyChanged
 {
-    public BoardModel CurrentBoard { get; }
+    public GameModel CurrentGame { get; }
     public TileModel SelectedTile { get; }
 
     public void ClearBoard();

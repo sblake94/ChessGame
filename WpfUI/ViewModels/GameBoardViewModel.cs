@@ -31,7 +31,7 @@ public partial class GameBoardViewModel
 
     private TileViewModel[] BuildTileViewModels()
     {
-        var tiles = _chessLogicFacadeService.CurrentBoard;
+        var tiles = _chessLogicFacadeService.CurrentGame.Board;
         var result = new TileViewModel[64];
         foreach(var tile in tiles)
         {

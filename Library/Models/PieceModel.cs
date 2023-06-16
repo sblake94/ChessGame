@@ -11,16 +11,11 @@ public class PieceModel
     public bool IsInPlay { get; set; } = true;
     public TileModel? StartingTile { get; } = null;
 
-    public enum TeamType
-    {
-        White = 0, 
-        Black = 1
-    }
-    public TeamType MyTeam
+    public TeamColor MyTeam
     { 
         get 
         {
-            return (TeamType)(CurrentPiece / 8);
+            return (TeamColor)(CurrentPiece / 8);
         }
     }
 
@@ -42,7 +37,7 @@ public class PieceModel
         }
     }
 
-    public PieceModel(TeamType team, UnitType unit, TileModel? originTile = null)
+    public PieceModel(TeamColor team, UnitType unit, TileModel? originTile = null)
     {
         CurrentPiece = (int)team * 8 + (int)unit;
         StartingTile = originTile;

@@ -1,5 +1,6 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
+using Library.Models.Game;
 
 namespace Library.Services;
 
@@ -16,9 +17,11 @@ public class MoveBlueprintingService
         
     }
 
-    public List<MoveModel> GetAllPossibleMoves(TileModel originTile, BoardModel board)
+    public List<MoveModel> GetAllPossibleMoves(TileModel originTile, GameModel game)
     {
         List<MoveModel> result = new List<MoveModel>();
+        BoardModel board = game.Board;
+
 
         // We only iterate over tiles that exist on the board
         // So we don't have to check for nulls
@@ -26,10 +29,10 @@ public class MoveBlueprintingService
         for (int targetX = 0; targetX < 8; targetX++)
         {
             var destinationTile = board[targetY, targetX];
-            if (DestinationIsReachableByPiece(originTile, destinationTile, board))
-            {
-                result.Add(new MoveModel(board, originTile, destinationTile));
-            }
+            if (originTile.OccupyingPiece.MyTeam != game.ActivePlayer.teamColor) { continue; }
+            if (!DestinationIsReachableByPiece(originTile, destinationTile, board)) { continue; }
+
+            result.Add(new MoveModel(game, originTile, destinationTile));
         }}
 
         return result;
@@ -37,7 +40,7 @@ public class MoveBlueprintingService
 
     public bool IsValidMove(MoveModel move)
     {
-        var allPossibleMoves = GetAllPossibleMoves(move.OriginTile, move.Board);
+        var allPossibleMoves = GetAllPossibleMoves(move.OriginTile, move.Game);
 
         bool valid = allPossibleMoves
             .Any(possibleMove => possibleMove.OriginTile == move.OriginTile 
@@ -50,7 +53,7 @@ public class MoveBlueprintingService
     {
         var unit = originTile.OccupyingPiece.MyUnit;
         var team = originTile.OccupyingPiece.MyTeam;
-        int direction = team == PieceModel.TeamType.White ? 1 : -1;
+        int direction = team == TeamColor.White ? 1 : -1;
 
         if (originTile.ClassicCoords == destinationTile.ClassicCoords) { return false; }
 
@@ -69,7 +72,7 @@ public class MoveBlueprintingService
         }
     }
 
-    private bool KingMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team)
+    private bool KingMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team)
     {
         if (GetDestinationTileIsOccupiedByAlly(destinationTile, team)) { return false; }
         var distanceVector = GetDistanceVector(originTile, destinationTile);
@@ -86,14 +89,14 @@ public class MoveBlueprintingService
         return false;
     }
 
-    private bool QueenMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team)
+    private bool QueenMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team)
     {
         bool isValidDiagonalMove = BishopMoveLogic(originTile, destinationTile, board, team);
         bool isValidStraightMove = RookMoveLogic(originTile, destinationTile, board, team);
         return isValidDiagonalMove || isValidStraightMove;
     }
 
-    private bool PawnMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team, int direction)
+    private bool PawnMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team, int direction)
     {
         bool canDoFirstMove = 
             GetIsOnStartingTile(originTile) && 
@@ -131,7 +134,7 @@ public class MoveBlueprintingService
             || canPerformEnPassantEast;
     }
 
-    private bool RookMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team)
+    private bool RookMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team)
     {
         if (GetDestinationTileIsOccupiedByAlly(destinationTile, team)) { return false; };
 
@@ -140,7 +143,7 @@ public class MoveBlueprintingService
         return pathIsClearAndValid;
     }
 
-    private bool KnightMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team)
+    private bool KnightMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team)
     {
         // Check if the destination tile is occupied by an ally
         if (GetDestinationTileIsOccupiedByAlly(destinationTile, team)) { return false; }
@@ -155,7 +158,7 @@ public class MoveBlueprintingService
         return false;
     }
 
-    private bool BishopMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, PieceModel.TeamType team)
+    private bool BishopMoveLogic(TileModel originTile, TileModel destinationTile, BoardModel board, TeamColor team)
     {
         // Check if the destination tile is occupied by an ally
         if (GetDestinationTileIsOccupiedByAlly(destinationTile, team)) { return false; }
@@ -233,7 +236,7 @@ public class MoveBlueprintingService
         return result;
     }
 
-    private static bool GetEnemyUnitNTilesEast(TileModel originTile, BoardModel board, int distance, PieceModel.TeamType team)
+    private static bool GetEnemyUnitNTilesEast(TileModel originTile, BoardModel board, int distance, TeamColor team)
     {
         // Check that there is a tile to the east of the origin tile
         if (originTile.X + distance > 7) { return false; }
@@ -241,7 +244,7 @@ public class MoveBlueprintingService
         return board[originTile.X + distance, originTile.Y].OccupyingPiece != PieceModel.None && board[originTile.X + distance, originTile.Y].OccupyingPiece.MyTeam != team;
     }
 
-    private static bool GetEnemyUnitNTilesWest(TileModel originTile, BoardModel board, int distance, PieceModel.TeamType team)
+    private static bool GetEnemyUnitNTilesWest(TileModel originTile, BoardModel board, int distance, TeamColor team)
     {
         // Check that there is a tile to the West of the origin tile
         if (originTile.X - distance < 0) { return false; }
@@ -274,11 +277,11 @@ public class MoveBlueprintingService
         return (destinationTile.X == originTile.X && destinationTile.Y == originTile.Y + distance * direction);
     }
 
-    private bool GetDestinationTileIsOccupiedByEnemy(TileModel destinationTile, PieceModel.TeamType team)
+    private bool GetDestinationTileIsOccupiedByEnemy(TileModel destinationTile, TeamColor team)
     {
         return (destinationTile.OccupyingPiece != PieceModel.None) && (destinationTile.OccupyingPiece.MyTeam != team);
     }
-    private bool GetDestinationTileIsOccupiedByAlly(TileModel destinationTile, PieceModel.TeamType team)
+    private bool GetDestinationTileIsOccupiedByAlly(TileModel destinationTile, TeamColor team)
     {
         return (destinationTile.OccupyingPiece != PieceModel.None) && (destinationTile.OccupyingPiece.MyTeam == team);
     }

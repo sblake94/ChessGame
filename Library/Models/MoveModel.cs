@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Library.Models.Game;
+using Microsoft.Extensions.Logging;
 using Microsoft.Win32.SafeHandles;
 
 namespace Library.Models
@@ -10,6 +11,7 @@ namespace Library.Models
         public Guid IdOfPieceBeingMoved { get; private set; }
         public Guid Id { get; } = Guid.NewGuid();
 
+        public GameModel Game { get; }
         public BoardModel Board { get; }
         public TileModel OriginTile { get; }
         public TileModel DestinationTile { get; }
@@ -43,9 +45,10 @@ namespace Library.Models
             return !(lhs == rhs);
         }
 
-        public MoveModel(BoardModel board, TileModel origin, TileModel destination)
+        public MoveModel(GameModel game, TileModel origin, TileModel destination)
         {
-            Board = board;
+            Game = game;
+            Board = game.Board;
             OriginTile = origin;
             DestinationTile = destination;
 

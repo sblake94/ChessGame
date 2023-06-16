@@ -2,6 +2,7 @@
 using Library.Exceptions;
 using Library.Logging;
 using Library.Models;
+using Library.Models.Game;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel;
 using System.Numerics;
@@ -18,8 +19,7 @@ public class GameStateEngineService
     private readonly IMoveHistoryService _moveHistoryService;
     private readonly IMoveBlueprintingService _moveBlueprintingService;
 
-    public BoardModel CurrentBoard { get; set; }
-
+    public GameModel CurrentGame { get; set; }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -47,7 +47,7 @@ public class GameStateEngineService
         get 
         { 
             return SelectedTile is not null 
-                ? _moveBlueprintingService.GetAllPossibleMoves(SelectedTile, CurrentBoard) 
+                ? _moveBlueprintingService.GetAllPossibleMoves(SelectedTile, CurrentGame) 
                 : new List<MoveModel>(); 
         } 
     } 
@@ -64,23 +64,22 @@ public class GameStateEngineService
         _moveHistoryService = moveHistoryService;
         _moveBlueprintingService = moveBlueprintingService;
 
-        ClearBoard();
-        SetBoardToStartingPositions();
+        CurrentGame = new GameModel(_notationService.GetStartingBoard());
     }
 
     public void ClearBoard()
     {
-        CurrentBoard = new BoardModel();
+        CurrentGame.Board = new BoardModel();
     }
 
     public void SetBoardToStartingPositions()
     {
-        CurrentBoard = _notationService.GetStartingBoard();
+        CurrentGame.Board = _notationService.GetStartingBoard();
     }
 
     public void ClickOnTile(int xPos, int yPos)
     {
-        TileModel? clickedTile = CurrentBoard
+        TileModel? clickedTile = CurrentGame.Board
             .Where(tile => tile.X == xPos)
             .Where(tile => tile.Y == yPos)
             .FirstOrDefault();
@@ -94,11 +93,12 @@ public class GameStateEngineService
             return; 
         }
 
-        var move = new MoveModel(CurrentBoard, SelectedTile, clickedTile);
+        var move = new MoveModel(CurrentGame, SelectedTile, clickedTile);
         if(_moveBlueprintingService.IsValidMove(move))
         {
             move.ExecuteMove();
             _moveHistoryService.LogMove(move);
+            CurrentGame.EndTurn();
         }
 
         SelectedTile = null;

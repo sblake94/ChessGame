@@ -58,7 +58,7 @@ public class TileViewModel
                 // Get possible moves for the selected tile
                 var possibleMoves = _chessLogicFacadeService.GetAllPossibleMoves(
                     _chessLogicFacadeService.SelectedTile,
-                    _chessLogicFacadeService.CurrentBoard)
+                    _chessLogicFacadeService.CurrentGame)
                     .Where(eachMove => eachMove.DestinationTile == _tileModel);
                 
                 // If the current tile is a possible move, highlight it
@@ -174,7 +174,7 @@ public class TileViewModel
 
     internal void SetIndex(string boardRef)
     {
-        TileModel = _chessLogicFacadeService.CurrentBoard[boardRef];
+        TileModel = _chessLogicFacadeService.CurrentGame.Board[boardRef];
     }
 
     internal void MouseEnter()

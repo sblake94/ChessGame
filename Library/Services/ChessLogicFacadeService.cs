@@ -1,5 +1,6 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Models;
+using Library.Models.Game;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -32,7 +33,7 @@ public class ChessLogicFacadeService
             }
         }
     }
-    public BoardModel? CurrentBoard => _gameStateEngineService.CurrentBoard;
+    public GameModel? CurrentGame => _gameStateEngineService.CurrentGame;
 
     public ObservableCollection<MoveModel> MoveHistory => _moveHistoryService.MoveHistory;
 
@@ -68,8 +69,8 @@ public class ChessLogicFacadeService
         _gameStateEngineService.ClickOnTile(x, y);
     }
 
-    public List<MoveModel> GetAllPossibleMoves(TileModel tile, BoardModel board)
+    public List<MoveModel> GetAllPossibleMoves(TileModel tile, GameModel game)
     {
-        return _moveBlueprintingService.GetAllPossibleMoves(tile, board);
+        return _moveBlueprintingService.GetAllPossibleMoves(tile, game);
     }
 }

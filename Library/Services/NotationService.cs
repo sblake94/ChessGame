@@ -64,19 +64,19 @@ public class NotationService
     {
         switch (symbol)
         {
-            case 'k': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.King, tile);
-            case 'q': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Queen, tile);
-            case 'b': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Bishop, tile);
-            case 'n': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Knight, tile);
-            case 'r': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Rook, tile);
-            case 'p': return new PieceModel(PieceModel.TeamType.Black, PieceModel.UnitType.Pawn, tile);
+            case 'k': return new PieceModel(TeamColor.Black, PieceModel.UnitType.King, tile);
+            case 'q': return new PieceModel(TeamColor.Black, PieceModel.UnitType.Queen, tile);
+            case 'b': return new PieceModel(TeamColor.Black, PieceModel.UnitType.Bishop, tile);
+            case 'n': return new PieceModel(TeamColor.Black, PieceModel.UnitType.Knight, tile);
+            case 'r': return new PieceModel(TeamColor.Black, PieceModel.UnitType.Rook, tile);
+            case 'p': return new PieceModel(TeamColor.Black, PieceModel.UnitType.Pawn, tile);
 
-            case 'K': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.King, tile);
-            case 'Q': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Queen, tile);
-            case 'B': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Bishop, tile);
-            case 'N': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Knight, tile);
-            case 'R': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Rook, tile);
-            case 'P': return new PieceModel(PieceModel.TeamType.White, PieceModel.UnitType.Pawn, tile);
+            case 'K': return new PieceModel(TeamColor.White, PieceModel.UnitType.King, tile);
+            case 'Q': return new PieceModel(TeamColor.White, PieceModel.UnitType.Queen, tile);
+            case 'B': return new PieceModel(TeamColor.White, PieceModel.UnitType.Bishop, tile);
+            case 'N': return new PieceModel(TeamColor.White, PieceModel.UnitType.Knight, tile);
+            case 'R': return new PieceModel(TeamColor.White, PieceModel.UnitType.Rook, tile);
+            case 'P': return new PieceModel(TeamColor.White, PieceModel.UnitType.Pawn, tile);
             
             default:
                 throw new InvalidArgumentException(nameof(symbol));

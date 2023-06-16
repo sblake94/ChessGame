@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Attributes\ViewModelAttributes\**" />
     <Compile Remove="Models - Copy\**" />
+    <EmbeddedResource Remove="Attributes\ViewModelAttributes\**" />
     <EmbeddedResource Remove="Models - Copy\**" />
+    <None Remove="Attributes\ViewModelAttributes\**" />
     <None Remove="Models - Copy\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Attributes\ViewModelAttributes\" />
   </ItemGroup>
 
   <ItemGroup>
