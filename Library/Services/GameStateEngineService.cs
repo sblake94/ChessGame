@@ -19,9 +19,21 @@ public class GameStateEngineService
     private readonly IMoveHistoryService _moveHistoryService;
     private readonly IMoveBlueprintingService _moveBlueprintingService;
 
-    public GameModel CurrentGame { get; set; }
-
     public event PropertyChangedEventHandler? PropertyChanged;
+
+    private GameModel _currentGame;
+    public GameModel CurrentGame 
+    {
+        get { return _currentGame; }
+        set
+        {
+            if(_currentGame != value)
+            {
+                _currentGame = value;
+                OnPropertyChanged(nameof(CurrentGame));
+            }
+        }
+    }
 
     private TileModel? _selectedTile;
     public TileModel? SelectedTile 
@@ -35,11 +47,6 @@ public class GameStateEngineService
                 OnPropertyChanged(nameof(SelectedTile));
             }
         }
-    }
-
-    private void OnPropertyChanged(string v)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v)); 
     }
 
     public List<MoveModel> PossibleMoves 
@@ -65,6 +72,21 @@ public class GameStateEngineService
         _moveBlueprintingService = moveBlueprintingService;
 
         CurrentGame = new GameModel(_notationService.GetStartingBoard());
+
+        CurrentGame.SecondPlayerScoreChanged += (sender, e) =>
+        {
+            OnPropertyChanged(nameof(CurrentGame));
+        };
+
+        CurrentGame.FirstPlayerScoreChanged += (sender, e) =>
+        {
+            OnPropertyChanged(nameof(CurrentGame));
+        };
+    }
+
+    private void OnPropertyChanged(string v)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v)); 
     }
 
     public void ClearBoard()
@@ -93,7 +115,7 @@ public class GameStateEngineService
             return; 
         }
 
-        var move = new MoveModel(CurrentGame, SelectedTile, clickedTile);
+        var move = new MoveModel(CurrentGame, CurrentGame.ActivePlayer, SelectedTile, clickedTile);
         if(_moveBlueprintingService.IsValidMove(move))
         {
             move.ExecuteMove();

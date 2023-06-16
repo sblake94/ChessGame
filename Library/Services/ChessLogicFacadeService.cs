@@ -33,7 +33,20 @@ public class ChessLogicFacadeService
             }
         }
     }
-    public GameModel? CurrentGame => _gameStateEngineService.CurrentGame;
+
+    private GameModel _currentGame;
+    public GameModel CurrentGame
+    {
+        get { return _currentGame; }
+        set
+        {
+            if(_currentGame != value)
+            {
+                _currentGame = value;
+                OnPropertyChanged(nameof(CurrentGame));
+            }
+        }
+    }
 
     public ObservableCollection<MoveModel> MoveHistory => _moveHistoryService.MoveHistory;
 
@@ -54,6 +67,8 @@ public class ChessLogicFacadeService
         _moveHistoryService = moveHistoryService;
         _notationService = notationService;
 
+        StartNewGame();
+
         _gameStateEngineService.PropertyChanged += (sender, e) =>
         {
             if (e.PropertyName == nameof(_gameStateEngineService.SelectedTile))
@@ -72,5 +87,12 @@ public class ChessLogicFacadeService
     public List<MoveModel> GetAllPossibleMoves(TileModel tile, GameModel game)
     {
         return _moveBlueprintingService.GetAllPossibleMoves(tile, game);
+    }
+
+    public void StartNewGame()
+    {
+        CurrentGame
+            = _gameStateEngineService.CurrentGame
+            = new GameModel(_notationService.GetStartingBoard());
     }
 }

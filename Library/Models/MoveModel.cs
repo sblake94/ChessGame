@@ -12,12 +12,14 @@ namespace Library.Models
         public Guid Id { get; } = Guid.NewGuid();
 
         public GameModel Game { get; }
+        public PlayerModel ActivePlayer { get; }
         public BoardModel Board { get; }
         public TileModel OriginTile { get; }
         public TileModel DestinationTile { get; }
         public bool MoveExecuted { get; set; } = false;
         public PieceModel PieceOriginallyAtDestination { get; set; }
         public TeamColor PieceColor { get; }
+        public MoveOutcome? Outcome { get; set; } = null;
 
         public string LogMessage { 
             get
@@ -50,12 +52,13 @@ namespace Library.Models
             return !(lhs == rhs);
         }
 
-        public MoveModel(GameModel game, TileModel origin, TileModel destination)
+        public MoveModel(GameModel game, PlayerModel activePlayer, TileModel origin, TileModel destination)
         {
             Game = game;
             Board = game.Board;
             OriginTile = origin;
             DestinationTile = destination;
+            ActivePlayer = activePlayer;
 
             IdOfPieceBeingMoved = OriginTile.OccupyingPiece.Id;
             PieceColor = OriginTile.OccupyingPiece.MyTeam;
@@ -64,10 +67,31 @@ namespace Library.Models
 
         public void ExecuteMove()
         {
+            // Update the Piece's location
             Board[DestinationTile.ClassicCoords].OccupyingPiece = OriginTile.OccupyingPiece;
             OriginTile.OccupyingPiece = PieceModel.None;
+
+            // Increment the player's score if they captured a piece
+            if(DestinationTile.OccupyingPiece.MyUnit != PieceModel.UnitType.None)
+            {
+                ActivePlayer.Score += PieceOriginallyAtDestination.ScoreValue;
+            }
+
+            // Finsh up execution
             MoveExecuted = true;
             LogMove();
+        }
+
+        public MoveOutcome DetermineOutcome()
+        {
+            if(Outcome is not null) { return Outcome.Value; }
+
+            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.None) { return MoveOutcome.MoveToEmptyTile; }
+            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.King) { return MoveOutcome.CaptureKing; }
+            if (PieceOriginallyAtDestination.MyUnit != PieceModel.UnitType.None) { return MoveOutcome.CaptureStandardPiece; }
+
+
+            throw new NotImplementedException(nameof(DetermineOutcome) + " " + Outcome.Value.ToString());
         }
 
         public void LogMove()

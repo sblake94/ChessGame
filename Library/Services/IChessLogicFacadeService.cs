@@ -14,4 +14,6 @@ public interface IChessLogicFacadeService : INotifyPropertyChanged
     void ClickOnTile(int x, int y);
     public List<MoveModel> GetAllPossibleMoves(TileModel tile, GameModel game);
 
+    void StartNewGame();
+
 }

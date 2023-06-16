@@ -14,12 +14,22 @@
 			<Setter Property="FontSize" Value="24"/>
 			<Setter Property="FontFamily" Value="Montserrat"/>
 			<Setter Property="Foreground" Value="White"/>
-			<Setter Property="Margin" Value="20,20,0,0"/>
+			<Setter Property="Margin" Value="10,10,0,0"/>
 		</Style>
 		<Style x:Key="DataDisplay" 
 			   TargetType="{x:Type Label}" 
 			   BasedOn="{StaticResource Title}">
 			<Setter Property="FontSize" Value="18"/>
+		</Style>
+		<Style x:Key="ScoreDisplay" 
+			   TargetType="{x:Type Label}" 
+			   BasedOn="{StaticResource DataDisplay}">
+			<Setter Property="FontSize" Value="18"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="Margin" Value="5"/>
 		</Style>
 
 	</UserControl.Resources>
@@ -41,6 +51,22 @@
 
 			<Label Style="{StaticResource ResourceKey=DataDisplay}"
 				   Content="{Binding Coords}"/>
+
+			<StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+				<Border Background="White" CornerRadius="5" Margin="10" Width="100">
+					<Label Style="{StaticResource ResourceKey=ScoreDisplay}"
+						   Foreground="Black"
+						   Content="{Binding WhiteScore}"/>
+				</Border>
+
+				<Border Background="Black" CornerRadius="5" Margin="10" Width="100">
+					
+					<Label Style="{StaticResource ResourceKey=ScoreDisplay}"
+						   VerticalAlignment="Center"
+					   Content="{Binding BlackScore}"/>
+				</Border>
+			</StackPanel>
 		</StackPanel>
 	</Border>
 	

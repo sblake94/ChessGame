@@ -8,7 +8,7 @@ namespace Library.Services;
 
 public interface IGameStateEngineService : INotifyPropertyChanged
 {
-    public GameModel CurrentGame { get; }
+    public GameModel CurrentGame { get; set; }
     public TileModel SelectedTile { get; }
 
     public void ClearBoard();

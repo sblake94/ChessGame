@@ -1,4 +1,5 @@
 ﻿using Library.Exceptions;
+using System.Net;
 
 namespace Library.Models;
 
@@ -10,6 +11,7 @@ public class PieceModel
     public int? CurrentPiece { get; set; }
     public bool IsInPlay { get; set; } = true;
     public TileModel? StartingTile { get; } = null;
+    public int ScoreValue { get; set; } = 0;
 
     public TeamColor MyTeam
     { 
@@ -43,6 +45,7 @@ public class PieceModel
         StartingTile = originTile;
 
         registeredPieces.Add(Id, this);
+        ScoreValue = GetPieceValue(unit);
     }
 
     public PieceModel(int currentPiece, TileModel? originTile = null)
@@ -74,6 +77,20 @@ public class PieceModel
     public static PieceModel BlackQueen = new PieceModel(13);
     public static PieceModel BlackKing = new PieceModel(14);
 
+    public static int GetPieceValue(UnitType unit)
+    {
+        switch (unit)
+        {
+            case UnitType.None:     return 0;
+            case UnitType.Pawn:     return 1;
+            case UnitType.Rook:     return 5;
+            case UnitType.Knight:   return 3;
+            case UnitType.Bishop:   return 3;
+            case UnitType.Queen:    return 9;
+            case UnitType.King:     return 1000;
+            default:                throw new InvalidArgumentException(nameof(unit));
+        }
+    }
 
     public static bool operator ==(PieceModel? a, PieceModel? b)
     {

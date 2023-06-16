@@ -32,7 +32,7 @@ public class MoveBlueprintingService
             if (originTile.OccupyingPiece.MyTeam != game.ActivePlayer.teamColor) { continue; }
             if (!DestinationIsReachableByPiece(originTile, destinationTile, board)) { continue; }
 
-            result.Add(new MoveModel(game, originTile, destinationTile));
+            result.Add(new MoveModel(game, game.ActivePlayer, originTile, destinationTile));
         }}
 
         return result;

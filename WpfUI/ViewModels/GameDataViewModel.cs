@@ -69,6 +69,15 @@ public class GameDataViewModel
         }
     }
 
+    public int WhiteScore
+    {
+        get { return _chessLogicFacadeService.CurrentGame.FirstPlayer.Score; }
+    }
+    public int BlackScore
+    {
+        get { return _chessLogicFacadeService.CurrentGame.SecondPlayer.Score; }
+    }
+
     public GameDataViewModel()
     {
         _chessLogicFacadeService.PropertyChanged += (sender, e) => 
@@ -80,5 +89,22 @@ public class GameDataViewModel
                 Team = _chessLogicFacadeService.SelectedTile?.OccupyingPiece.MyTeam.ToString() ?? "-";
             }
         };
+
+        _chessLogicFacadeService.CurrentGame.FirstPlayer.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(_chessLogicFacadeService.CurrentGame.FirstPlayer.Score))
+            {
+                OnPropertyChanged(nameof(WhiteScore));
+            }
+        };
+
+        _chessLogicFacadeService.CurrentGame.SecondPlayer.PropertyChanged += (sender, e) =>
+        {
+            if (e.PropertyName == nameof(_chessLogicFacadeService.CurrentGame.SecondPlayer.Score))
+            {
+                OnPropertyChanged(nameof(BlackScore));
+            }
+        };
+        
     }
 }

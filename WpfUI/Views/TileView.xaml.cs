@@ -47,7 +47,7 @@ namespace WpfUI.Views
 
         private void TileView_Loaded(object sender, RoutedEventArgs e)
         {
-            if(DataContext is TileViewModel tileViewModel)
+            if(DataContext is TileViewModel)
             {
                 ViewModel.SetIndex(BoardRef);
                 ViewModel.Refresh();

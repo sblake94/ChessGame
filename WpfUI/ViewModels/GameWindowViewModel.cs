@@ -14,7 +14,7 @@ public partial class GameWindowViewModel
     [RelayCommand]
     public void CMD_NewGame()
     {
-        throw new NotImplementedException();
+        _chessLogicFacadeService.StartNewGame();
     }
 
     [RelayCommand]

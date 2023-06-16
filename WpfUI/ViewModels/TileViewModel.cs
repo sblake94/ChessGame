@@ -39,7 +39,7 @@ public class TileViewModel
 
     private TileModel? _tileModel;
 
-    static List<TileViewModel> instances = new List<TileViewModel>();
+    static List<TileViewModel> instances = new List<TileViewModel>(64);
 
     public new event PropertyChangedEventHandler? PropertyChanged;
 
