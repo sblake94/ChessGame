@@ -16,15 +16,20 @@ namespace Library.Models
         public TileModel OriginTile { get; }
         public TileModel DestinationTile { get; }
         public bool MoveExecuted { get; set; } = false;
-
+        public PieceModel PieceOriginallyAtDestination { get; set; }
+        public TeamColor PieceColor { get; }
 
         public string LogMessage { 
             get
             {
                 if (MoveExecuted)
-                    return $"Moved {DestinationTile.OccupyingPiece.ToString} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
+                    return 
+                        $"Moved {DestinationTile.OccupyingPiece.MyUnit.ToString()} " +
+                        $"from {OriginTile.ClassicCoords} " +
+                        $"to {DestinationTile.ClassicCoords}" +
+                        (PieceOriginallyAtDestination == PieceModel.None ? $"" : $", to take {PieceOriginallyAtDestination.ToString()}");
                 else
-                    return $"Intention to move {OriginTile.OccupyingPiece.ToString} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
+                    return $"Intention to move {OriginTile.OccupyingPiece.ToString()} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
             }
         }
 
@@ -53,6 +58,8 @@ namespace Library.Models
             DestinationTile = destination;
 
             IdOfPieceBeingMoved = OriginTile.OccupyingPiece.Id;
+            PieceColor = OriginTile.OccupyingPiece.MyTeam;
+            PieceOriginallyAtDestination = DestinationTile.OccupyingPiece;
         }
 
         public void ExecuteMove()
@@ -70,7 +77,5 @@ namespace Library.Models
             string logMessage = $"{DateTime.Now}: Moved {DestinationTile.OccupyingPiece} from {OriginTile.ClassicCoords} to {DestinationTile.ClassicCoords}";
             _logger.LogInformation(logMessage);
         }
-
-        
     }
 }

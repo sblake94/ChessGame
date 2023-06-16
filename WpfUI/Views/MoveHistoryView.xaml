@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfUI.Views"
+			 xmlns:cnv="clr-namespace:WpfUI.Converters"
 			 xmlns:vm="clr-namespace:WpfUI.ViewModels"
              mc:Ignorable="d" 
 			 Margin="20,20,0,0">
@@ -11,6 +12,10 @@
 	<UserControl.DataContext>
 		<vm:MoveHistoryViewModel/>
 	</UserControl.DataContext>
+	<UserControl.Resources>
+		<cnv:PieceColorConverter x:Key="PieceColorConverter"/>
+	</UserControl.Resources>
+
 
 	<ScrollViewer HorizontalScrollBarVisibility="Auto">
 		<ListView Name="MoveHistoryDisplay" 
@@ -30,12 +35,13 @@
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="*"/>
 							</Grid.ColumnDefinitions>
-							<Ellipse Fill="Gray"
+							<Ellipse Fill="{Binding PieceColor, Converter={StaticResource PieceColorConverter}}"
 									 Width="10"
 									 Height="10"
 								     Margin="10"
 									 VerticalAlignment="Center"
 									 HorizontalAlignment="Left"/>
+
 							<TextBlock Grid.Column="1"
 									   Foreground="White"
 									   Margin="10"
