@@ -4,7 +4,7 @@ using Library.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace WpfUI.ViewModels
+namespace Presentation_WPF.ViewModels
 {
     public class MoveHistoryViewModel
     {

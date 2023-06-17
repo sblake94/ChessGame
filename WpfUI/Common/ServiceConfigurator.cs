@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace WpfUI.Common
+namespace Presentation_WPF.Common
 {
     public static class ServiceConfigurator
     {
@@ -22,7 +22,7 @@ namespace WpfUI.Common
             var serviceCollection = new ServiceCollection();
 
             Assembly libAssembly = Assembly.Load(nameof(Library));
-            Assembly wpfAssembly = Assembly.Load(nameof(WpfUI));
+            Assembly wpfAssembly = Assembly.Load(nameof(Presentation_WPF));
 
             // AddViews(serviceCollection, wpfAssembly);
             // AddViewModels(serviceCollection, wpfAssembly);

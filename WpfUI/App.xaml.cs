@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using WpfUI.Common;
-using WpfUI.Views;
+using Presentation_WPF.Common;
+using Presentation_WPF.Views;
 
-namespace WpfUI
+namespace Presentation_WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml

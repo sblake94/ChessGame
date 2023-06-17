@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 
-namespace WpfUI.ViewModels;
+namespace Presentation_WPF.ViewModels;
 
 public class TileViewModel 
     : ViewModelBase<TileViewModel>

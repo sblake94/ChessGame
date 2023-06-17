@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace WpfUI.ViewModels;
+namespace Presentation_WPF.ViewModels;
 
 public partial class GameBoardViewModel
     : ViewModelBase<GameBoardViewModel>
