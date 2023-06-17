@@ -1,4 +1,4 @@
-﻿using Library.Models;
+﻿using Library.Models.Game;
 using System.Collections.ObjectModel;
 
 namespace Library.Services;

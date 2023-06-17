@@ -1,5 +1,5 @@
 ﻿using Library.Attributes.ServiceAttributes;
-using Library.Models;
+using Library.Models.Game;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 

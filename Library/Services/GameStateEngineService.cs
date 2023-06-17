@@ -1,7 +1,7 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
 using Library.Logging;
-using Library.Models;
+using Library.Models.Data.Result;
 using Library.Models.Game;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel;
@@ -101,11 +101,13 @@ public class GameStateEngineService
 
     public void ClickOnTile(int xPos, int yPos)
     {
+        // If the game is already over, don't allow any more moves
+        if (CurrentGame.Winner is not null) { return; }
+
         TileModel? clickedTile = CurrentGame.Board
             .Where(tile => tile.X == xPos)
             .Where(tile => tile.Y == yPos)
             .FirstOrDefault();
-
 
         if (clickedTile is null) { throw new TileNotFoundException(new TileModel(xPos, yPos)); }
 
@@ -119,6 +121,27 @@ public class GameStateEngineService
         if(_moveBlueprintingService.IsValidMove(move))
         {
             move.ExecuteMove();
+            Result<MoveOutcome> outcome = move.DetermineOutcome();
+            if (!outcome.IsSuccess) { throw outcome.Exception; }
+
+            switch(outcome.Value)
+            {
+                case MoveOutcome.CaptureKing:
+                case MoveOutcome.Checkmate:
+                    {
+                        CurrentGame.GameOver(move.ActivePlayer);
+                        break;
+                    }
+
+                case MoveOutcome.Check:
+                    {
+                        // Handle check state
+                        break;
+                    }
+
+                default: break;
+            }
+
             _moveHistoryService.LogMove(move);
             CurrentGame.EndTurn();
         }

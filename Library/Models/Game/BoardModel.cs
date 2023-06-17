@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Security;
 
-namespace Library.Models
+namespace Library.Models.Game
 {
     public class BoardModel : IEnumerable<TileModel>
     {
@@ -14,35 +14,35 @@ namespace Library.Models
 
         public BoardModel()
         {
-            _tiles = new TileModel[8,8];
+            _tiles = new TileModel[8, 8];
 
-            for(int x =  0; x < 8; x++)
+            for (int x = 0; x < 8; x++)
             {
                 for (int y = 0; y < 8; y++)
                 {
                     TileModel tile = new TileModel(x, y, PieceModel.None);
-                    _tiles[x,y] = tile;
+                    _tiles[x, y] = tile;
                 }
             }
         }
 
         public BoardModel TransferPieceToEmptyTile(TileModel startingTile, TileModel destinationTile)
         {
-            if(destinationTile.IsNotEmpty) { throw new InvalidMoveException(startingTile, destinationTile); }
+            if (destinationTile.IsNotEmpty) { throw new InvalidMoveException(startingTile, destinationTile); }
 
             PieceModel piece = startingTile.OccupyingPiece;
             startingTile.OccupyingPiece = PieceModel.None;
             destinationTile.OccupyingPiece = piece;
 
-            this._tiles[startingTile.X, startingTile.Y] = startingTile;
-            this._tiles[destinationTile.X, destinationTile.Y] = destinationTile;
+            _tiles[startingTile.X, startingTile.Y] = startingTile;
+            _tiles[destinationTile.X, destinationTile.Y] = destinationTile;
 
             return this;
         }
 
         public IEnumerator<TileModel> GetEnumerator()
         {
-            foreach(var tile in _tiles)
+            foreach (var tile in _tiles)
             {
                 yield return tile;
             }
@@ -78,7 +78,7 @@ namespace Library.Models
             get
             {
                 Validation.NotNull(reference, nameof(reference));
-                Validation.Equals(reference.Length, 2);
+                Equals(reference.Length, 2);
                 Validation.IsInRange(reference[0], 'A', 'H', nameof(reference));
                 Validation.IsInRange(reference[1], '1', '8', nameof(reference));
 
@@ -95,7 +95,7 @@ namespace Library.Models
             set
             {
                 Validation.NotNull(reference, nameof(reference));
-                Validation.Equals(reference.Length, 2);
+                Equals(reference.Length, 2);
                 Validation.IsInRange(reference[0], 'A', 'H', nameof(reference));
                 Validation.IsInRange(reference[1], '1', '8', nameof(reference));
 

@@ -1,7 +1,7 @@
 ﻿using Library.Exceptions;
 using System.Net;
 
-namespace Library.Models;
+namespace Library.Models.Game;
 
 public class PieceModel
 {
@@ -14,8 +14,8 @@ public class PieceModel
     public int ScoreValue { get; set; } = 0;
 
     public TeamColor MyTeam
-    { 
-        get 
+    {
+        get
         {
             return (TeamColor)(CurrentPiece / 8);
         }
@@ -32,8 +32,8 @@ public class PieceModel
         King = 6
     }
     public UnitType MyUnit
-    { 
-        get 
+    {
+        get
         {
             return (UnitType)(CurrentPiece % 8);
         }
@@ -53,7 +53,7 @@ public class PieceModel
         CurrentPiece = currentPiece;
         StartingTile = originTile;
 
-        if(currentPiece == 0)
+        if (currentPiece == 0)
         {
             return;
         }
@@ -81,14 +81,14 @@ public class PieceModel
     {
         switch (unit)
         {
-            case UnitType.None:     return 0;
-            case UnitType.Pawn:     return 1;
-            case UnitType.Rook:     return 5;
-            case UnitType.Knight:   return 3;
-            case UnitType.Bishop:   return 3;
-            case UnitType.Queen:    return 9;
-            case UnitType.King:     return 1000;
-            default:                throw new InvalidArgumentException(nameof(unit));
+            case UnitType.None: return 0;
+            case UnitType.Pawn: return 1;
+            case UnitType.Rook: return 5;
+            case UnitType.Knight: return 3;
+            case UnitType.Bishop: return 3;
+            case UnitType.Queen: return 9;
+            case UnitType.King: return 1000;
+            default: throw new InvalidArgumentException(nameof(unit));
         }
     }
 

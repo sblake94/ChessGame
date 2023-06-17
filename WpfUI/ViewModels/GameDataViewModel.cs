@@ -105,6 +105,11 @@ public class GameDataViewModel
                 OnPropertyChanged(nameof(BlackScore));
             }
         };
-        
+
+        _chessLogicFacadeService.CurrentGame.OnGameOver += (sender, e) =>
+        {
+            string winner = _chessLogicFacadeService.CurrentGame.Winner.teamColor.ToString();
+            TitleContent = $"Game Over : {winner} wins!";
+        };
     }
 }

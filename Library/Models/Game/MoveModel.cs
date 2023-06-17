@@ -1,8 +1,8 @@
-﻿using Library.Models.Game;
+﻿using Library.Models.Data.Result;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32.SafeHandles;
 
-namespace Library.Models
+namespace Library.Models.Game
 {
     public class MoveModel
     {
@@ -21,11 +21,12 @@ namespace Library.Models
         public TeamColor PieceColor { get; }
         public MoveOutcome? Outcome { get; set; } = null;
 
-        public string LogMessage { 
+        public string LogMessage
+        {
             get
             {
                 if (MoveExecuted)
-                    return 
+                    return
                         $"Moved {DestinationTile.OccupyingPiece.MyUnit.ToString()} " +
                         $"from {OriginTile.ClassicCoords} " +
                         $"to {DestinationTile.ClassicCoords}" +
@@ -35,19 +36,19 @@ namespace Library.Models
             }
         }
 
-        public static bool operator==(MoveModel lhs, MoveModel rhs)
+        public static bool operator ==(MoveModel lhs, MoveModel rhs)
         {
             var sameOrigin = lhs.OriginTile == rhs.OriginTile;
             var sameDestination = lhs.DestinationTile == rhs.DestinationTile;
             var samePiece = lhs.IdOfPieceBeingMoved == rhs.IdOfPieceBeingMoved;
             var sameBoard = lhs.Board == rhs.Board;
             var sameExecutionState = lhs.MoveExecuted == rhs.MoveExecuted;
-            
+
 
             return sameOrigin && sameDestination && samePiece && sameBoard && sameExecutionState;
         }
 
-        public static bool operator!=(MoveModel lhs, MoveModel rhs)
+        public static bool operator !=(MoveModel lhs, MoveModel rhs)
         {
             return !(lhs == rhs);
         }
@@ -72,7 +73,7 @@ namespace Library.Models
             OriginTile.OccupyingPiece = PieceModel.None;
 
             // Increment the player's score if they captured a piece
-            if(DestinationTile.OccupyingPiece.MyUnit != PieceModel.UnitType.None)
+            if (DestinationTile.OccupyingPiece.MyUnit != PieceModel.UnitType.None)
             {
                 ActivePlayer.Score += PieceOriginallyAtDestination.ScoreValue;
             }
@@ -82,16 +83,16 @@ namespace Library.Models
             LogMove();
         }
 
-        public MoveOutcome DetermineOutcome()
+        public Result<MoveOutcome> DetermineOutcome()
         {
-            if(Outcome is not null) { return Outcome.Value; }
+            if (Outcome is not null) { return new Success<MoveOutcome>(Outcome.Value); }
 
-            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.None) { return MoveOutcome.MoveToEmptyTile; }
-            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.King) { return MoveOutcome.CaptureKing; }
-            if (PieceOriginallyAtDestination.MyUnit != PieceModel.UnitType.None) { return MoveOutcome.CaptureStandardPiece; }
+            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.None) { return new Success<MoveOutcome>(MoveOutcome.MoveToEmptyTile); }
+            if (PieceOriginallyAtDestination.MyUnit == PieceModel.UnitType.King) { return new Success<MoveOutcome>(MoveOutcome.CaptureKing); }
+            if (PieceOriginallyAtDestination.MyUnit != PieceModel.UnitType.None) { return new Success<MoveOutcome>(MoveOutcome.CaptureStandardPiece); }
 
 
-            throw new NotImplementedException(nameof(DetermineOutcome) + " " + Outcome.Value.ToString());
+            return new Failure<MoveOutcome>(new NotImplementedException(nameof(DetermineOutcome) + " " + Outcome!.Value.ToString()));
         }
 
         public void LogMove()

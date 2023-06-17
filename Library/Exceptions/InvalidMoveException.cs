@@ -1,4 +1,4 @@
-﻿using Library.Models;
+﻿using Library.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;

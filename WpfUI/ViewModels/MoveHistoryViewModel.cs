@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Models;
+using Library.Models.Game;
 using Library.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

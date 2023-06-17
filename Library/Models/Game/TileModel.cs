@@ -1,6 +1,6 @@
 ﻿using Library.Common;
 
-namespace Library.Models
+namespace Library.Models.Game
 {
     public class TileModel : IEquatable<TileModel>
     {
@@ -8,8 +8,9 @@ namespace Library.Models
         public readonly int X;
         public readonly int Y;
 
-        public string ClassicCoords { 
-            get 
+        public string ClassicCoords
+        {
+            get
             {
                 string result = $"{(char)(X + 'A')}{(char)(Y + '1')}";
                 return result;
@@ -24,13 +25,13 @@ namespace Library.Models
 
         public PieceModel OccupyingPiece
         {
-            get 
-            { 
-                return _occupyingPiece; 
-            }
-            set 
+            get
             {
-                _occupyingPiece = value; 
+                return _occupyingPiece;
+            }
+            set
+            {
+                _occupyingPiece = value;
             }
         }
 
@@ -42,11 +43,11 @@ namespace Library.Models
             Validation.InRange(xPos, 0, 7, nameof(xPos));
             Validation.InRange(yPos, 0, 7, nameof(yPos));
 
-            this.X = xPos;
-            this.Y = yPos;
+            X = xPos;
+            Y = yPos;
 
             if (occupyingPiece is null) { occupyingPiece = PieceModel.None; }
-            this.OccupyingPiece = occupyingPiece;
+            OccupyingPiece = occupyingPiece;
         }
 
         public static TileModel CreateFromTileID(string? tileID)
@@ -65,7 +66,7 @@ namespace Library.Models
 
         public bool Equals(TileModel? other)
         {
-            return Validation.Equals(this, other);
+            return Equals(this, other);
         }
     }
 }

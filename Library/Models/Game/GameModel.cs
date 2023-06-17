@@ -12,9 +12,11 @@ namespace Library.Models.Game
         public event PropertyChangedEventHandler? FirstPlayerScoreChanged;
         public event PropertyChangedEventHandler? SecondPlayerScoreChanged;
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler? OnGameOver;
 
         public PlayerModel ActivePlayer { get { return _isFirstPlayerTurn ? FirstPlayer : SecondPlayer; } }
         public PlayerModel InactivePlayer { get { return _isFirstPlayerTurn ? SecondPlayer : FirstPlayer; } }
+        public PlayerModel Winner { get; set; }
 
         public BoardModel Board { get; set; }
 
@@ -46,6 +48,12 @@ namespace Library.Models.Game
         public void EndTurn()
         {
             _isFirstPlayerTurn = !_isFirstPlayerTurn;
+        }
+
+        public void GameOver(PlayerModel victoriousPlayer)
+        {
+            Winner = victoriousPlayer;
+            OnGameOver?.Invoke(this, new PropertyChangedEventArgs(nameof(Winner)));
         }
     }
 }

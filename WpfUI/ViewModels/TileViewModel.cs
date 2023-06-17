@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Library.Common;
-using Library.Models;
+using Library.Models.Game;
 using Library.Services;
 using System;
 using System.Collections.Generic;

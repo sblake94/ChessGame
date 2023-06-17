@@ -1,6 +1,6 @@
 ﻿using Library.Attributes.ServiceAttributes;
 using Library.Exceptions;
-using Library.Models;
+using Library.Models.Game;
 using Microsoft.Extensions.Logging;
 
 namespace Library.Services;
