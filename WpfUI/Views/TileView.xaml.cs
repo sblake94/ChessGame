@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Presentation_WPF.ViewModels;
@@ -24,14 +25,18 @@ namespace Presentation_WPF.Views
         public TileView()
         {
             InitializeComponent();
-
-            DataContext = ViewModel = new TileViewModel();
+            
             Loaded += TileView_Loaded;
         }
 
         private void TileView_Loaded(object sender, RoutedEventArgs e)
         {
-            if(DataContext is TileViewModel)
+            // Convert A1 through H8 to x and y coordinates
+            var x = BoardRef[0] - 65;
+            var y = BoardRef[1] - 49;
+
+            DataContext = ViewModel = new TileViewModel(x, y);
+            if (DataContext is TileViewModel)
             {
                 ViewModel.SetIndex(BoardRef);
                 ViewModel.Refresh();

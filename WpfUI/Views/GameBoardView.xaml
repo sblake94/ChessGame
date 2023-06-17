@@ -6,6 +6,7 @@
 			 xmlns:vm="clr-namespace:Presentation_WPF.ViewModels"
              xmlns:local="clr-namespace:Presentation_WPF.Views"
              mc:Ignorable="d">
+	
 	<UserControl.DataContext>
 		<vm:GameBoardViewModel/>
 	</UserControl.DataContext>

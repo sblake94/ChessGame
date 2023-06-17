@@ -1,6 +1,7 @@
 ﻿using Application.ServiceAbstracts;
 using Domain.Models.Game;
 using Infrastructure.Attributes.ServiceAttributes;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace Infrastructure.ServiceImplementations
         private readonly INotationService _notationService;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler BoardReset;
 
         private TileModel _selectedTile;
 
@@ -95,6 +97,8 @@ namespace Infrastructure.ServiceImplementations
             CurrentGame
                 = _gameStateEngineService.CurrentGame
                 = new GameModel(_notationService.GetStartingBoard());
+
+            BoardReset?.Invoke(this, EventArgs.Empty);
         }
     }
 }

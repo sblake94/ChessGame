@@ -4,6 +4,7 @@ using Domain.Common;
 using Domain.Models.Game;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -35,9 +36,10 @@ public class TileViewModel
     private static string WHITE_QUEE_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteQueen.png";
     private static string WHITE_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKing.png";
 
-    private TileModel? _tileModel;
+    private TileModel _tileModel;
 
-    static List<TileViewModel> instances = new List<TileViewModel>(64);
+    static TileViewModel[] instances;
+    static int instancesCursor = 0;
 
     public new event PropertyChangedEventHandler? PropertyChanged;
 
@@ -154,16 +156,29 @@ public class TileViewModel
         }
     }
 
+    static TileViewModel()
+    {
+        instances = new TileViewModel[64];
+    }
 
-    public TileViewModel()
+    public TileViewModel(int xPosition, int yPosition)
     {
         _chessLogicFacadeService = Ioc.Default.GetRequiredService<IChessLogicFacadeService>();
-        instances.Add(this);
+        instances[instancesCursor] = this;
+        instancesCursor++;
+
+        this.TileModel = _chessLogicFacadeService.CurrentGame.Board[xPosition, yPosition];
+
+        _chessLogicFacadeService.BoardReset += (sender, args) =>
+        {
+            this.TileModel = _chessLogicFacadeService.CurrentGame.Board[_tileModel.X, _tileModel.Y];
+            Refresh();
+        };
     }
 
     ~TileViewModel()
     {
-        instances.Remove(this);
+        instances.ToList().Remove(this);
     }
 
     private void NotifyPropertyChanged(string propertyName)

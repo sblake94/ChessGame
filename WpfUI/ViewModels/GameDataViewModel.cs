@@ -108,5 +108,12 @@ public class GameDataViewModel
             string winner = _chessLogicFacadeService.CurrentGame.Winner.teamColor.ToString();
             TitleContent = $"Game Over : {winner} wins!";
         };
+
+        _chessLogicFacadeService.BoardReset += (sender, e) =>
+        {
+            TitleContent = "Game Data";
+            OnPropertyChanged(nameof(WhiteScore));
+            OnPropertyChanged(nameof(BlackScore));
+        };
     }
 }

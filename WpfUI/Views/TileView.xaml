@@ -11,10 +11,6 @@
 			 MouseDown="TileView_MouseDown"
 			 MouseLeave="TileView_MouseLeave">
 
-	<UserControl.DataContext>
-		<vm:TileViewModel/>
-	</UserControl.DataContext>
-
 	<UserControl.Resources>
 		<cnv:StringToImageSourceConverter x:Key="StringToImageSourceConverter"/>
 	</UserControl.Resources>
