@@ -1,16 +1,14 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Models.Game;
-using Library.Services;
-using System.Collections.Generic;
+﻿using Application.ServiceAbstracts;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Domain.Models.Game;
 using System.Collections.ObjectModel;
 
-namespace WpfUI.ViewModels
+namespace Presentation_WPF.ViewModels
 {
     public class MoveHistoryViewModel
     {
         private readonly IChessLogicFacadeService _chessLogicFacadeService;
 
-        
         public ObservableCollection<MoveModel> MoveHistory
         {
             get

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace WpfUI.Converters
+namespace Presentation_WPF.Converters
 {
     public class PieceColorConverter : IValueConverter
     {
@@ -22,5 +22,4 @@ namespace WpfUI.Converters
             throw new NotImplementedException();
         }
     }
-
 }

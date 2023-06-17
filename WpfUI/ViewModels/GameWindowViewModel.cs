@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using System;
 
-namespace WpfUI.ViewModels;
+namespace Presentation_WPF.ViewModels;
 
 public partial class GameWindowViewModel
     : ViewModelBase<GameWindowViewModel>

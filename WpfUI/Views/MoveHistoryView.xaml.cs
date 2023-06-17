@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfUI.ViewModels;
+using Presentation_WPF.ViewModels;
 
-namespace WpfUI.Views
+namespace Presentation_WPF.Views
 {
     /// <summary>
     /// Interaction logic for MoveHistoryView.xaml

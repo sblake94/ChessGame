@@ -1,7 +1,7 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Common;
-using Library.Models.Game;
-using Library.Services;
+﻿using Application.ServiceAbstracts;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Domain.Common;
+using Domain.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 
-namespace WpfUI.ViewModels;
+namespace Presentation_WPF.ViewModels;
 
 public class TileViewModel 
     : ViewModelBase<TileViewModel>
@@ -34,8 +34,6 @@ public class TileViewModel
     private static string WHITE_BISH_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteBishop.png";
     private static string WHITE_QUEE_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteQueen.png";
     private static string WHITE_KING_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\WpfUI\\Resources\\Images\\WhiteKing.png";
-
-    private readonly IChessLogicFacadeService _chessLogicFacadeService;
 
     private TileModel? _tileModel;
 
@@ -74,6 +72,7 @@ public class TileViewModel
                 : Brushes.Magenta;
         }
     }
+
     public string ImageSource 
     {
         get

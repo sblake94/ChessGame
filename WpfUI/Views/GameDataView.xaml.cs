@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
-using WpfUI.ViewModels;
+using Presentation_WPF.ViewModels;
 
-namespace WpfUI.Views
+namespace Presentation_WPF.Views
 {
     /// <summary>
     /// Interaction logic for GameDataView.xaml
