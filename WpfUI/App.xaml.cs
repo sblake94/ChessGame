@@ -10,20 +10,20 @@ namespace Presentation_WPF
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         private IServiceProvider services;
 
         public App()
         {
             
+            var ConfigurationResult = ServiceConfigurator.Configure();
+            services = ConfigurationResult.Value;
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            services = ServiceConfigurator.Configure();
 
             MainWindow = new GameWindowView();
             MainWindow.Show();

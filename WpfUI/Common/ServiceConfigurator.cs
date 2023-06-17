@@ -1,105 +1,79 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Attributes.ServiceAttributes;
-using Library.Exceptions;
-using Library.Services;
+﻿using Domain.Models.Data.Result;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Infrastructure.ServiceImplementations;
+using Infrastructure.Attributes.ServiceAttributes;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Application.ServiceAbstracts;
 
 namespace Presentation_WPF.Common
 {
     public static class ServiceConfigurator
     {
-        private const string s_viewsNameSpace = nameof(Views);
-        private const string s_viewModelsNameSpace = nameof(ViewModels);
-        private const string s_servicesNameSpace = nameof(Library.Services);
+        const string INFRASTRUCTURE_ASSEMBLY_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\Infrastructure\\bin\\Debug\\netstandard2.0";
+        //const string APPLICATION_ASSEMBLY_PATH = "D:\\Dev\\Visual Studio Projects\\Portfolio\\ChessGame\\ChessGame\\Application\\Application.csproj";
 
-        public static IServiceProvider Configure()
+        internal static Result<IServiceProvider> Configure()
         {
-            var serviceCollection = new ServiceCollection();
+            IServiceCollection services = new ServiceCollection();
 
-            Assembly libAssembly = Assembly.Load(nameof(Library));
-            Assembly wpfAssembly = Assembly.Load(nameof(Presentation_WPF));
+            // and register them as services
+            // AutomaticallyFindAndAddServices(services);
+            ManuallyAddServices(services);
 
-            // AddViews(serviceCollection, wpfAssembly);
-            // AddViewModels(serviceCollection, wpfAssembly);
-            AddServices(serviceCollection, libAssembly);
-
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-            Ioc.Default.ConfigureServices(serviceProvider);
-
-            return serviceProvider;
+            var provider = services.BuildServiceProvider();
+            Ioc.Default.ConfigureServices(provider);
+            return new Success<IServiceProvider>(provider);
         }
 
-        private static void AddServices(ServiceCollection serviceCollection, Assembly libAssembly)
+        private static void ManuallyAddServices(IServiceCollection services)
         {
-            var implementations = libAssembly.GetTypes()
-                .Where(implementation => implementation.Name.EndsWith("Service"))
-                .Where(implementation => implementation.FullName!.Contains(s_servicesNameSpace))
-                .Where(implementation => !implementation.IsInterface);
+            services.AddSingleton(typeof(IChessLogicFacadeService), typeof(ChessLogicFacadeService));
+            services.AddSingleton(typeof(IGameStateEngineService), typeof(GameStateEngineService));
+            services.AddSingleton(typeof(ILoggerFactoryService), typeof(LoggerFactoryService));
+            services.AddSingleton(typeof(IMoveHistoryService), typeof(MoveHistoryService));
 
-            foreach (var implementation in implementations)
+            services.AddTransient(typeof(IMoveBlueprintingService), typeof(MoveBlueprintingService));
+            services.AddTransient(typeof(INotationService), typeof(NotationService));
+        }
+
+        private static void AutomaticallyFindAndAddServices(IServiceCollection services)
+        {
+            // Get the Infrastructure assembly
+            var infrastructureAssembly = Assembly.LoadFrom(INFRASTRUCTURE_ASSEMBLY_PATH);
+
+            //var applicationAssembly = Assembly.LoadFrom(APPLICATION_ASSEMBLY_PATH);
+
+            var allTypes = infrastructureAssembly.GetTypes();
+            var serviceTypes = allTypes
+                .Where(type => type.Namespace == nameof(Infrastructure.ServiceImplementations))
+                .Where(type => type.BaseType == typeof(ServiceBase<>));
+
+            // Get all Types in the Infrastructure.ServiceImplementations namespace
+            foreach (Type type in serviceTypes)
             {
-                var @interface = implementation.GetInterfaces()
-                    .Where(i => i.IsInterface)
-                    .Where(i => i.Name == $"I{implementation.Name}")
-                    .FirstOrDefault();
-
-                if (@interface is null)
+                // Check if the type has the SingletonService attribute
+                if (type.GetCustomAttributes().Any(attribute => attribute.GetType() == typeof(SingletonService)))
                 {
-                    throw new ServiceInterfaceNotFoundException($"Interface not found for implementation: {implementation.FullName}", implementation);
+                    // Get the interface that the type implements
+                    var interfaceType = type.GetInterfaces().First();
+
+                    // Register it as a singleton
+                    services.AddSingleton(interfaceType, type);
                 }
 
-                if (IsTransientService(implementation)) 
+                // Check if the type has the TransientService attribute
+                if (type.GetCustomAttributes().Any(attribute => attribute.GetType() == typeof(TransientService)))
                 {
-                    serviceCollection.AddTransient(@interface, implementation);
-                    continue;
+                    // Get the interface that the type implements
+                    var interfaceType = type.GetInterfaces().First();
+
+                    // Register it as a transient
+                    services.AddTransient(interfaceType, type);
                 }
-
-                if (IsSingletonService(implementation)) 
-                { 
-                    serviceCollection.AddSingleton(@interface, implementation);
-                    continue;
-                }
-
-                throw new InvalidServiceException($"{implementation.Name} lacks a valid ServiceAttribute", @interface, implementation);                 
             }
         }
-
-        private static void AddViewModels(ServiceCollection serviceCollection, Assembly assembly)
-        {
-            var viewModels = assembly.GetTypes()
-                            .Where(t => t.Name.EndsWith("ViewModel"))
-                            .Where(t => t.FullName!.Contains(s_viewModelsNameSpace));
-
-            foreach (var viewModel in viewModels)
-            {
-                serviceCollection.AddSingleton(viewModel);
-            }
-        }
-
-        private static void AddViews(ServiceCollection serviceCollection, Assembly assembly)
-        {
-            IEnumerable<Type> views = assembly.GetTypes();
-
-            views = views.Where(t => t.Name.EndsWith("View"));
-            views = views.Where(t => t.FullName!.Contains(s_viewsNameSpace));
-
-            foreach (var view in views)
-            {
-                serviceCollection.AddSingleton(view);
-            }
-        }
-
-
-        private static bool IsTransientService(Type type) =>
-            type.GetCustomAttributes(typeof(TransientService), inherit: true).Any();
-
-        private static bool IsSingletonService(Type type) =>
-            type.GetCustomAttributes(typeof(SingletonService), inherit: true).Any();
-
     }
 }

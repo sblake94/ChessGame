@@ -1,7 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Application.ServiceAbstracts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Services;
-using System.ComponentModel;
 
 namespace Presentation_WPF.ViewModels
 {
@@ -13,7 +12,7 @@ namespace Presentation_WPF.ViewModels
         : ObservableObject
         where T : ViewModelBase<T>
     {
-        protected readonly IChessLogicFacadeService _chessLogicFacadeService;
+        protected IChessLogicFacadeService _chessLogicFacadeService;
 
         public ViewModelBase()
         {

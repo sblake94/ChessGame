@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Library.Services;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Presentation_WPF.ViewModels;
 

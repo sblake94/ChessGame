@@ -1,22 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Application.ServiceAbstracts;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Input;
-using Library.Models;
-using Library.Services;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace Presentation_WPF.ViewModels;
 
 public partial class GameBoardViewModel
     : ViewModelBase<GameBoardViewModel>
 {
-    private readonly IChessLogicFacadeService _chessLogicFacadeService;
-
-
     public TileViewModel[] Tiles
     {
         get { return BuildTileViewModels(); }
